@@ -2194,6 +2194,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bebc86ad2828543a5aff5375a84c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _networkHandler: {fileID: 1166119283}
+  _initialPanel: {fileID: 64156209}
+  _sessionBrowserPanel: {fileID: 1267120866}
+  _hostGamePanel: {fileID: 1517934920}
+  _statusPanel: {fileID: 1916833277}
+  _joinLobbyButton: {fileID: 393595408}
+  _gotToHostPanelButton: {fileID: 1774027623}
+  _hostButton: {fileID: 1170310456}
+  _hostsessionName: {fileID: 1986664157}
+  _statusText: {fileID: 2061491247}
 --- !u!114 &1761107728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2779,7 +2789,7 @@ GameObject:
   - component: {fileID: 2061491248}
   - component: {fileID: 2061491247}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text - Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3057,6 +3067,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 1166119284}
   - {fileID: 1761107731}
   - {fileID: 1561956086}
+  - {fileID: 1166119284}
