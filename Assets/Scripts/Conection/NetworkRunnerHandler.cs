@@ -15,10 +15,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public event Action OnJoinedLobby = delegate { };
 
-    private void Start()
-    {
-        JoinLobby();
-    }
 
     #region Join / Create Game
 

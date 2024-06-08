@@ -39,14 +39,20 @@ public class MainMenuHandler : MonoBehaviour
 
     void Button_JoinLobby()
     {
+        _networkHandler.JoinLobby();
 
+        _initialPanel.SetActive(false);
+        _statusPanel.SetActive(true);
+
+        _statusText.text = "Joining lobby...";
     }
     void Button_ShowHostPanel()
     {
-
+        _sessionBrowserPanel.SetActive(false);
+        _hostGamePanel.SetActive(true);
     } 
     void Button_CreateGameSession()
     {
-
+        _networkHandler.CreateGame(_hostsessionName.text, "Game");
     }
 }
