@@ -15,6 +15,8 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public event Action OnJoinedLobby = delegate { };
 
+    public event Action<List<SessionInfo>> OnSessionListUpdate = delegate { };
+
 
     #region Join / Create Game
 
@@ -83,13 +85,14 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     #region Used Runner Callbacks
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        if (sessionList.Count == 0) return;
+        //if (sessionList.Count == 0) return;
 
-        var session = sessionList[0];
+        //var session = sessionList[0];
 
-        Debug.Log($"[Custom msg] joining {session.Name}");
+        //Debug.Log($"[Custom msg] joining {session.Name}");
 
-        JoinGame(session);
+        //JoinGame(session);
+        OnSessionListUpdate(sessionList);
     }
     #endregion
 
