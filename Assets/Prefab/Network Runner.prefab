@@ -58,5 +58,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab:
-    RawGuidValue: 54cefc819146e714da737914987ca6fa
+    RawGuidValue: c886d5742872eff4cb241c2272d77fb8
   _spawnPlayerHost: {fileID: 0}
