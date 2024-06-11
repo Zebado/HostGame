@@ -7,14 +7,22 @@ using System;
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
-    [SerializeField] NetworkPrefabRef _playerPrefab;
+    [SerializeField] NetworkPrefabRef _playerPrefab1, _playerPrefab2;
+    private int numberOfPlayers = 0;
     [SerializeField] Transform _spawnPlayerHost;
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
-            runner.Spawn(_playerPrefab, null, null, player);
+            if((numberOfPlayers % 2) == 0){
+                runner.Spawn(_playerPrefab1, null, null, player);
+                numberOfPlayers++;
+            }
+            else{
+                runner.Spawn(_playerPrefab2, null, null, player);
+                numberOfPlayers++;
+            }
         }
     }
     CharacterInputHandler _characterInputHandler;
@@ -28,7 +36,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) 
     {
-
+        runner.Shutdown();
     }
 
     #region Unused Callbacks
