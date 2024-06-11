@@ -2,6 +2,12 @@ using Fusion;
 
 public struct NetworkInputData : INetworkInput
 {
-    public float movementinput;
-    public NetworkBool isJumpPressed;
+    public float movementInput;
+    
+    public NetworkButtons networkButtons;
+}
+
+enum MyButtons
+{
+    Jump = 0,
 }

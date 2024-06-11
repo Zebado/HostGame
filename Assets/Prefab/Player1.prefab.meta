@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Prefab/Player1.prefab.meta
 guid: 54cefc819146e714da737914987ca6fa
 labels:
 - FusionPrefab
 PrefabImporter:
+=======
+guid: e9d55f5952830a34e9c33cbe016901ea
+folderAsset: yes
+DefaultImporter:
+>>>>>>> Stashed changes:Assets/Scripts/Player/Movement.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

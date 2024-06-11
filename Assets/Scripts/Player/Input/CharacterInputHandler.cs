@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterInputHandler : MonoBehaviour
 {
-    NetworkInputData _inputData;
+    private NetworkInputData _inputData;
 
-    bool _isJumpPressed;
-
+    private bool _isJumpPressed;
+    
     void Start()
     {
         _inputData = new NetworkInputData();
@@ -15,19 +13,18 @@ public class CharacterInputHandler : MonoBehaviour
 
     void Update()
     {
-        _inputData.movementinput = Input.GetAxis("Horizontal");
+        _inputData.movementInput = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            _isJumpPressed = true;
-        }
+        _isJumpPressed |= Input.GetKeyDown(KeyCode.W);
+
     }
+
     public NetworkInputData GetLocalInputs()
     {
-
-        _inputData.isJumpPressed = _isJumpPressed;
+        
+        _inputData.networkButtons.Set(MyButtons.Jump, _isJumpPressed);
         _isJumpPressed = false;
-
+        
         return _inputData;
     }
 }
