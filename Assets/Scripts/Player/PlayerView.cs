@@ -13,12 +13,13 @@ public class PlayerView : NetworkBehaviour
 
         _mecanim = GetComponentInChildren<NetworkMecanimAnimator>();
             
-        var m = GetComponentInParent<PlayerController>();
+        var m = GetComponentInParent<NetworkCharacterControllerCustom>();
 
         if (!m || !_mecanim) return;
 
         m.OnMovement += MoveAnimation;
         m.OnJump += JumpAnimation;
+        m.OnFall += FallAnimation;
         //m.OnDead += DeadAnimation;
         //m.OnReset += ResetAnimation;
         //m.OnShoot += ShootAnimation;
@@ -27,7 +28,7 @@ public class PlayerView : NetworkBehaviour
     }
     void MoveAnimation(float xAxi)
     {
-        _mecanim.Animator.SetFloat("xAxi", Mathf.Abs(xAxi));
+        _mecanim.Animator.SetFloat("axiX", Mathf.Abs(xAxi));
     }
     void DeadAnimation()
     {
@@ -40,7 +41,10 @@ public class PlayerView : NetworkBehaviour
     void ShootAnimation(bool state){
         _mecanim.Animator.SetBool("isShooting", state);
     }
-    void JumpAnimation(bool state){
-        _mecanim.Animator.SetBool("isJumping", state);
+    void JumpAnimation(){
+        _mecanim.Animator.SetTrigger("isJumping");
+    }
+    void FallAnimation(bool state){
+        _mecanim.Animator.SetBool("isFalling", state);
     }
 }

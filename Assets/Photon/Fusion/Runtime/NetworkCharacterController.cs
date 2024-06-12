@@ -75,7 +75,7 @@ namespace Fusion {
         }
 
 
-        public void Jump(bool ignoreGrounded = false, float? overrideImpulse = null)
+        public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null)
         {
             if (Data.Grounded || ignoreGrounded)
             {

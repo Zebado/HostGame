@@ -298,69 +298,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Boxy Jump Anim-Color1_9
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 822078d9f62fc424d84d44ad15ea9d01
-      internalID: -235091217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boxy Jump Anim-Color1_10
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa8853418160dd84889e7f29b110f3bb
-      internalID: 521432745
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boxy Jump Anim-Color1_11
-      rect:
-        serializedVersion: 2
-        x: 704
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4eabff131518a064dbf1a3761c7bc301
-      internalID: -1496750387
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -374,8 +311,6 @@ TextureImporter:
     nameFileIdTable:
       Boxy Jump Anim-Color1_0: 2009337800
       Boxy Jump Anim-Color1_1: -1527970207
-      Boxy Jump Anim-Color1_10: 521432745
-      Boxy Jump Anim-Color1_11: -1496750387
       Boxy Jump Anim-Color1_2: 1372818761
       Boxy Jump Anim-Color1_3: -2011760055
       Boxy Jump Anim-Color1_4: 1955318214
@@ -383,7 +318,6 @@ TextureImporter:
       Boxy Jump Anim-Color1_6: -122006087
       Boxy Jump Anim-Color1_7: 1890045
       Boxy Jump Anim-Color1_8: 18403430
-      Boxy Jump Anim-Color1_9: -235091217
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

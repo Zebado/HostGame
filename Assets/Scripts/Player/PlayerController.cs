@@ -6,9 +6,8 @@ using System;
 public class PlayerController : NetworkBehaviour
 {
     private NetworkCharacterControllerCustom _myCharacterController;
-    private bool _isJumping, _canShoot,_isShooting;
-    public event Action<float> OnMovement = delegate {  };
-    public event Action<bool> OnJump = delegate { };
+    [SerializeField] private LayerMask walls;
+    [SerializeField] private Vector3 wallBoxDimension;
     
     private void Awake()
     {
@@ -18,22 +17,32 @@ public class PlayerController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData networkInputData)) return;
-        
+       // _myCharacterController.inWall = Physics2D.OverlapBox(transform.position + new Vector3(2,0,0), wallBoxDimension, 0f, walls);
         //MOVIMIENTO
 
         Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
         _myCharacterController.Move(moveDirection);
-        OnMovement(moveDirection.x);
+        
         
         //SALTO
 
         if (networkInputData.networkButtons.IsSet(MyButtons.Jump))
         {
             _myCharacterController.Jump();
-            _isJumping = true;
-            OnJump(_isJumping);
         }
         
 
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+        if (hit.gameObject.layer == walls){
+            _myCharacterController.inWall = true;
+        }
+        //else
+           // _myCharacterController.inWall = false;
+    }
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.layer == walls){
+            _myCharacterController.inWall = true;
+        }
     }
 }
