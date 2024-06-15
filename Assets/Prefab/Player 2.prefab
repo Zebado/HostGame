@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 654214388013602730}
   - component: {fileID: 9064843268614641600}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +196,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 0
-  m_Radius: 0.35
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 1214126661
+  SortKey: 4001434996
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
