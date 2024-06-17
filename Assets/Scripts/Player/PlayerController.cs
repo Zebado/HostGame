@@ -26,7 +26,16 @@ public class PlayerController : NetworkBehaviour
         {
             _myCharacterController.Jump();
         }
-        
 
+        //POLARIDADES
+        if (networkInputData._positivePolarity)
+        {
+
+        }
+
+        if (networkInputData._negativePolarity)
+        {
+
+        }
     }
 }

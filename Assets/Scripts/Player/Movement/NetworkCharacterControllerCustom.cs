@@ -40,4 +40,12 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         Velocity = (transform.position - previousPos) * Runner.TickRate;
         Grounded = Controller.isGrounded;
     }
+    public void PositivePolarity(Transform target)
+    {
+        
+    }
+    public void NegativePolarity(Transform target)
+    {
+        Velocity = (transform.position - target.transform.position) * Runner.TickRate;
+    }
 }
