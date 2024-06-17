@@ -5,6 +5,7 @@ using Fusion;
 public class PlayerController : NetworkBehaviour
 {
     private NetworkCharacterControllerCustom _myCharacterController;
+    [SerializeField] Transform _target;
     
     private void Awake()
     {
@@ -30,12 +31,12 @@ public class PlayerController : NetworkBehaviour
         //POLARIDADES
         if (networkInputData._positivePolarity)
         {
-
+            _myCharacterController.PositivePolarity(_target);
         }
 
         if (networkInputData._negativePolarity)
         {
-
+            _myCharacterController.NegativePolarity(_target);
         }
     }
 }

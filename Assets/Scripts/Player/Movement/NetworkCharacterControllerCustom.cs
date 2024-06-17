@@ -46,6 +46,6 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
     }
     public void NegativePolarity(Transform target)
     {
-        Velocity = (transform.position - target.transform.position) * Runner.TickRate;
+
     }
 }
