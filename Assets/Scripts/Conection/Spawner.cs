@@ -8,13 +8,14 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
     [SerializeField] NetworkPrefabRef _playerPrefab;
-    [SerializeField] Transform _spawnPlayerHost;
+    [SerializeField] Vector3 _spawnPlayerHost;
+    [SerializeField] Vector3 _spawnPlayerClient;
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
-            runner.Spawn(_playerPrefab, null, null, player);
+            runner.Spawn(_playerPrefab, _spawnPlayerHost, null, player);
         }
     }
     CharacterInputHandler _characterInputHandler;

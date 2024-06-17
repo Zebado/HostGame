@@ -19,6 +19,7 @@ public class CharacterInputHandler : MonoBehaviour
         _inputData.movementInput = Input.GetAxis("Horizontal");
 
         _isJumpPressed |= Input.GetKeyDown(KeyCode.W);
+
         if (Input.GetMouseButtonDown(0))
         {
             _isNegativePolarity = true;
