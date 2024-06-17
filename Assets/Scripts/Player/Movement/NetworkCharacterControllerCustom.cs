@@ -10,10 +10,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
     public event Action OnJump = delegate { };
     public event Action<bool> OnFall = delegate { };
 
-    [Header("WallSlide")]
-    public bool inWall;
-    private bool sliding;
-    [SerializeField] private float slideVelocity;
+
 
     public override void Move(Vector3 direction)
     {
@@ -23,20 +20,11 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         
 
         direction = direction.normalized;
-        if(direction != default && Grounded && inWall){
-            sliding = true;
-            Debug.Log("Slide");
-        }
-        else{
-            sliding = false;
-        }
+
         if (Grounded && moveVelocity.y < 0)
         {
             moveVelocity.y = 0f;
         }
-        if(sliding){
-            moveVelocity.y += slideVelocity * Runner.DeltaTime;
-            Debug.Log("Sliding");}
         else
             moveVelocity.y += gravity * Runner.DeltaTime;
 
@@ -68,7 +56,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
             var newVel = Velocity;
             newVel.y += overrideImpulse ?? jumpImpulse;
             Velocity = newVel;
-            //OnJump();
+            OnJump();
         }
     }
     

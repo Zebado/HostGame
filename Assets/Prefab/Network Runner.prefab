@@ -61,4 +61,7 @@ MonoBehaviour:
     RawGuidValue: c886d5742872eff4cb241c2272d77fb8
   _playerPrefab2:
     RawGuidValue: d7b01e7e56c405a499b537ac600b4280
-  _spawnPlayerHost: {fileID: 0}
+  _spawnPlayer1position:
+  - {x: -6.75, y: -0.75, z: 0}
+  _spawnPlayer2position:
+  - {x: 6.5, y: -1.25, z: 0}

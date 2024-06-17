@@ -8,20 +8,18 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
     [SerializeField] NetworkPrefabRef _playerPrefab1, _playerPrefab2;
-    private int numberOfPlayers = 0;
-    [SerializeField] Transform _spawnPlayerHost;
+    private int levelCount = 0;
+    [SerializeField] Vector3[] _spawnPlayer1position, _spawnPlayer2position;
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
-            if((numberOfPlayers % 2) == 0){
-                runner.Spawn(_playerPrefab1, null, null, player);
-                numberOfPlayers++;
+            if((runner.Config.Simulation.PlayerCount % 2) == 0){
+                NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab1, null, Quaternion.identity, player);
             }
             else{
-                runner.Spawn(_playerPrefab2, null, null, player);
-                numberOfPlayers++;
+                NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab1, null, Quaternion.identity, player);
             }
         }
     }
