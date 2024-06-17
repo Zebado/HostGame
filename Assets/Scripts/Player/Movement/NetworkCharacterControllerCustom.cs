@@ -68,7 +68,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
             var newVel = Velocity;
             newVel.y += overrideImpulse ?? jumpImpulse;
             Velocity = newVel;
-            OnJump();
+            //OnJump();
         }
     }
     
