@@ -7,7 +7,7 @@ using System;
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
-    [SerializeField] NetworkPrefabRef _playerPrefab;
+    [SerializeField] NetworkPrefabRef _playerPrefab1,_playerPrefab2;
     [SerializeField] Vector3 _spawnPlayerHost;
     [SerializeField] Vector3 _spawnPlayerClient;
 
@@ -15,7 +15,10 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            runner.Spawn(_playerPrefab, _spawnPlayerHost, null, player);
+            if(runner.Config.Simulation.PlayerCount % 2 == 0)
+                runner.Spawn(_playerPrefab1, _spawnPlayerHost, null, player);
+            else
+                runner.Spawn(_playerPrefab2, _spawnPlayerHost, null, player);
         }
     }
     CharacterInputHandler _characterInputHandler;
