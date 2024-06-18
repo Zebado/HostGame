@@ -10,6 +10,8 @@ public class PlayerController : NetworkBehaviour
     public float maxDistance = 2f; // La distancia máxima que deseas permitir
     Camera cam;
     public Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
+    RaycastHit hit;
+    private bool polarityPlus, polarityNegative;
     private void Awake()
     {
         cam = Camera.main;
@@ -20,7 +22,6 @@ public class PlayerController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData networkInputData)) return;
-       // _myCharacterController.inWall = Physics2D.OverlapBox(transform.position + new Vector3(2,0,0), wallBoxDimension, 0f, walls);
         //MOVIMIENTO
         Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
         _myCharacterController.Move(moveDirection);
@@ -33,6 +34,21 @@ public class PlayerController : NetworkBehaviour
             _myCharacterController.Jump();
         }
         
+        //Polarity
+        if (networkInputData._negativePolarity)
+        {
+            if(polarityPlus)
+                _myCharacterController.ApplyForce(hit.point, true);
+            else if(polarityNegative)
+                _myCharacterController.ApplyForce(hit.point, false);
+        }
+        if (networkInputData._positivePolarity)
+        {
+            if(polarityPlus)
+                _myCharacterController.ApplyForce(hit.point, false);
+            else if(polarityNegative)
+                _myCharacterController.ApplyForce(hit.point, true);
+        }
 
     }
 
@@ -56,25 +72,33 @@ public class PlayerController : NetworkBehaviour
         myRend.SetPosition(1, clampedPosition); // El punto final es la posición clamped
 
         // Realizar un Raycast desde el jugador hasta la posición clamped
-        RaycastHit hit;
+        
         if (Physics.Raycast(transform.position, direction.normalized, out hit, distance))
         {
             if (hit.collider.CompareTag("Polarity +"))
             {
-                myRend.colorGradient = polarityPlusColor;;
+                myRend.colorGradient = polarityPlusColor;
+                polarityPlus = true;
+                polarityNegative = false;
             }
             else if (hit.collider.CompareTag("Polarity -"))
             {
                 myRend.colorGradient = polarityNegativeColor;
+                polarityPlus = false;
+                polarityNegative = true;
             }
             else
             {
                 myRend.colorGradient = defaultColor;
+                polarityPlus = false;
+                polarityNegative = false;
             }
         }
         else
         {
             myRend.colorGradient = defaultColor;
+            polarityPlus = false;
+            polarityNegative = false;
         }
     }
 }

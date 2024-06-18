@@ -10,7 +10,13 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
     public event Action OnJump = delegate { };
     public event Action<bool> OnFall = delegate { };
 
+    // Agregar un campo para la magnitud de la fuerza
+    public float forceMagnitude = 10f;
 
+    // Variables para rastrear cuántas veces la fuerza ha sido aplicada
+    private int attractForceCount = 0;
+    private int repelForceCount = 0;
+    private const int MaxForceCount = 2;
 
     public override void Move(Vector3 direction)
     {
@@ -49,6 +55,13 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         Velocity = (transform.position - previousPos) * Runner.TickRate;
         Grounded = Controller.isGrounded;
         OnFall(!Grounded);
+
+        // Resetear los contadores cuando toca el suelo
+        if (Grounded)
+        {
+            attractForceCount = 0;
+            repelForceCount = 0;
+        }
     }
     public override void Jump(bool ignoreGrounded = false, float? overrideImpulse = null){
         if (Grounded || ignoreGrounded)
@@ -59,5 +72,36 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
             OnJump();
         }
     }
+
+    public void ApplyForce(Vector3 targetPoint, bool attract)
+    {
+        if ((attract && attractForceCount >= MaxForceCount) || (!attract && repelForceCount >= MaxForceCount))
+        {
+            return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
+        }
+        
+        Vector3 forceDirection = (targetPoint - transform.position).normalized;
+        if (!attract)
+        {
+            forceDirection = -forceDirection;
+        }
+
+        // Aplicar la fuerza a la velocidad del jugador
+        var moveVelocity = Velocity;
+        moveVelocity += forceDirection * forceMagnitude;
+
+        Velocity = moveVelocity;
+
+        // Incrementar el contador de fuerza aplicada
+        if (attract)
+        {
+            attractForceCount++;
+        }
+        else
+        {
+            repelForceCount++;
+        }
+    }
+
     
 }
