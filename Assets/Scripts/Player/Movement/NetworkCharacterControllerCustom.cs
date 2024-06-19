@@ -59,8 +59,8 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         // Resetear los contadores cuando toca el suelo
         if (Grounded)
         {
-            attractForceCount = 0;
-            repelForceCount = 0;
+            attractForceCount = MaxForceCount;
+            repelForceCount = MaxForceCount;
         }
     }
     public override void Jump(bool ignoreGrounded = false, float? overrideImpulse = null){
@@ -75,9 +75,18 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
 
     public void ApplyForce(Vector3 targetPoint, bool attract)
     {
-        if ((attract && attractForceCount >= MaxForceCount) || (!attract && repelForceCount >= MaxForceCount))
+        // Incrementar el contador de fuerza aplicada
+        if (attract)
         {
-            return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
+            attractForceCount--;
+            if (attract && attractForceCount < 0)
+                return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
+        }
+        else
+        {
+            repelForceCount--;
+            if((!attract && repelForceCount >= MaxForceCount))
+                return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
         }
         
         Vector3 forceDirection = (targetPoint - transform.position).normalized;
@@ -92,15 +101,6 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
 
         Velocity = moveVelocity;
 
-        // Incrementar el contador de fuerza aplicada
-        if (attract)
-        {
-            attractForceCount++;
-        }
-        else
-        {
-            repelForceCount++;
-        }
     }
 
     

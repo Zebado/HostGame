@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
     [SerializeField] NetworkPrefabRef _playerPrefab1,_playerPrefab2;
+    [SerializeField] private int cantOfPlayers;
     [SerializeField] Vector3 _spawnPlayerHost;
     [SerializeField] Vector3 _spawnPlayerClient;
 
@@ -15,10 +16,14 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            if(runner.Config.Simulation.PlayerCount % 2 == 0)
+            if(cantOfPlayers % 2 == 0){
                 runner.Spawn(_playerPrefab1, _spawnPlayerHost, null, player);
-            else
+                cantOfPlayers++;
+            }
+            else{
                 runner.Spawn(_playerPrefab2, _spawnPlayerClient, null, player);
+                cantOfPlayers++;
+            }
         }
     }
     CharacterInputHandler _characterInputHandler;
@@ -34,6 +39,9 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     {
 
     }
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
+        cantOfPlayers--;
+    }
 
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }
@@ -44,7 +52,6 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
     public void OnSceneLoadDone(NetworkRunner runner) { }
