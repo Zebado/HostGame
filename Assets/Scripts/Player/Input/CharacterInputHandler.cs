@@ -5,7 +5,7 @@ public class CharacterInputHandler : MonoBehaviour
     private NetworkInputData _inputData;
 
     private bool _isJumpPressed;
-    private bool _isActivatePressed;
+    public bool _isActivatePressed;
     private bool _isNegativePolarity;
     private bool _isPositivePolarity;
 

@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: -9169905456210293712}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,13 +196,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.63
-  m_Radius: 0.3
+  m_Height: 0.42
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -0.04, y: 0.06, z: 0}
 --- !u!114 &5361093969280810203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 2565704284
+  SortKey: 1132808070
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -267,6 +267,8 @@ MonoBehaviour:
   braking: 10
   maxSpeed: 4
   rotationSpeed: 15
+  forceMagnitude: 10
+  MaxForceCount: 2
 --- !u!114 &9064843268614641600
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -85,7 +85,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         else
         {
             repelForceCount--;
-            if((!attract && repelForceCount >= MaxForceCount))
+            if((!attract && repelForceCount < 0))
                 return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
         }
         
@@ -103,5 +103,10 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
 
     }
 
-    
+    public void ActivateObjects(List<IActivable> activablesInRange){
+        foreach (var activable in activablesInRange)
+        {
+            activable.Activate();
+        }
+    }
 }

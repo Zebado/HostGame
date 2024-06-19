@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using Fusion;
 using System;
 
@@ -6,12 +7,14 @@ using System;
 public class PlayerController : NetworkBehaviour
 {
     private NetworkCharacterControllerCustom _myCharacterController;
+    private bool polarityPlus, polarityNegative;
+    private List<IActivable> activablesInRange = new List<IActivable>();
+    [Header("LineRenderer")]
     [SerializeField] private LineRenderer myRend;
     public float maxDistance = 2f; // La distancia máxima que deseas permitir
     Camera cam;
     public Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
     RaycastHit hit;
-    private bool polarityPlus, polarityNegative;
     private void Awake()
     {
         cam = Camera.main;
@@ -36,7 +39,7 @@ public class PlayerController : NetworkBehaviour
 
         if (networkInputData.networkButtons.IsSet(MyButtons.Activate))
         {
-            //_myCharacterController.Activate();
+            _myCharacterController.ActivateObjects(activablesInRange);
         }
         
         //Polarity
@@ -55,6 +58,24 @@ public class PlayerController : NetworkBehaviour
                 _myCharacterController.ApplyForce(hit.point, true);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IActivable activable = other.GetComponent<IActivable>();
+        if (activable != null)
+        {
+            activablesInRange.Add(activable);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        IActivable activable = other.GetComponent<IActivable>();
+        if (activable != null)
+        {
+            activablesInRange.Remove(activable);
+        }
     }
 
     private void SetLineRenderer(){
