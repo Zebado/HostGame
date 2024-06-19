@@ -16,7 +16,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
     // Variables para rastrear cuántas veces la fuerza ha sido aplicada
     private int attractForceCount = 0;
     private int repelForceCount = 0;
-    private const int MaxForceCount = 2;
+    [SerializeField] private int MaxForceCount = 2;
 
     public override void Move(Vector3 direction)
     {

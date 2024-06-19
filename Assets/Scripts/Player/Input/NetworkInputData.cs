@@ -10,5 +10,6 @@ public struct NetworkInputData : INetworkInput
 
 enum MyButtons
 {
-    Jump = 0
+    Jump = 0,
+    Activate = 1
 }

@@ -5,6 +5,7 @@ public class CharacterInputHandler : MonoBehaviour
     private NetworkInputData _inputData;
 
     private bool _isJumpPressed;
+    private bool _isActivatePressed;
     private bool _isNegativePolarity;
     private bool _isPositivePolarity;
 
@@ -19,6 +20,8 @@ public class CharacterInputHandler : MonoBehaviour
         _inputData.movementInput = Input.GetAxis("Horizontal");
 
         _isJumpPressed |= Input.GetKeyDown(KeyCode.W);
+
+        _isActivatePressed |= Input.GetKeyDown(KeyCode.E);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -40,6 +43,9 @@ public class CharacterInputHandler : MonoBehaviour
 
         _inputData.networkButtons.Set(MyButtons.Jump, _isJumpPressed);
         _isJumpPressed = false;
+
+        _inputData.networkButtons.Set(MyButtons.Activate, _isActivatePressed);
+        _isActivatePressed = false;
         
         return _inputData;
     }

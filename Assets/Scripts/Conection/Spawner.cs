@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
             if(runner.Config.Simulation.PlayerCount % 2 == 0)
                 runner.Spawn(_playerPrefab1, _spawnPlayerHost, null, player);
             else
-                runner.Spawn(_playerPrefab2, _spawnPlayerHost, null, player);
+                runner.Spawn(_playerPrefab2, _spawnPlayerClient, null, player);
         }
     }
     CharacterInputHandler _characterInputHandler;

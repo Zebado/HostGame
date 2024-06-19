@@ -33,6 +33,11 @@ public class PlayerController : NetworkBehaviour
         {
             _myCharacterController.Jump();
         }
+
+        if (networkInputData.networkButtons.IsSet(MyButtons.Activate))
+        {
+            //_myCharacterController.Activate();
+        }
         
         //Polarity
         if (networkInputData._negativePolarity)

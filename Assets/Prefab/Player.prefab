@@ -267,6 +267,8 @@ MonoBehaviour:
   braking: 10
   maxSpeed: 4
   rotationSpeed: 15
+  forceMagnitude: 10
+  MaxForceCount: 2
 --- !u!114 &9064843268614641600
 MonoBehaviour:
   m_ObjectHideFlags: 0

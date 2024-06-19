@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="TileSet" tilewidth="256" tileheight="256" tilecount="52" columns="0" tilerendersize="grid">
+<tileset version="1.10" tiledversion="1.10.2" name="TileSet" tilewidth="256" tileheight="256" tilecount="53" columns="0" tilerendersize="grid">
  <grid orientation="orthogonal" width="1" height="1"/>
  <properties>
   <property name="DeleteTiles" type="bool" value="true"/>
@@ -260,5 +260,8 @@
  </tile>
  <tile id="87">
   <image width="256" height="256" source="../../Art/Tiles/None.png"/>
+ </tile>
+ <tile id="151">
+  <image width="256" height="256" source="../../Art/Tiles/input 5.png"/>
  </tile>
 </tileset>
