@@ -13,10 +13,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
     // Agregar un campo para la magnitud de la fuerza
     public float forceMagnitude = 10f;
 
-    // Variables para rastrear cuántas veces la fuerza ha sido aplicada
-    private int attractForceCount = 0;
-    private int repelForceCount = 0;
-    [SerializeField] private int MaxForceCount = 2;
+    
 
     public override void Move(Vector3 direction)
     {
@@ -56,12 +53,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         Grounded = Controller.isGrounded;
         OnFall(!Grounded);
 
-        // Resetear los contadores cuando toca el suelo
-        if (Grounded)
-        {
-            attractForceCount = MaxForceCount;
-            repelForceCount = MaxForceCount;
-        }
+        
     }
     public override void Jump(bool ignoreGrounded = false, float? overrideImpulse = null){
         if (Grounded || ignoreGrounded)
@@ -75,20 +67,7 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
 
     public void ApplyForce(Vector3 targetPoint, bool attract)
     {
-        // Incrementar el contador de fuerza aplicada
-        if (attract)
-        {
-            attractForceCount--;
-            if (attract && attractForceCount < 0)
-                return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
-        }
-        else
-        {
-            repelForceCount--;
-            if((!attract && repelForceCount < 0))
-                return; // No aplicar la fuerza si ya se ha aplicado el máximo número de veces
-        }
-        
+               
         Vector3 forceDirection = (targetPoint - transform.position).normalized;
         if (!attract)
         {

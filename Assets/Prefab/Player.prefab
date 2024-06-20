@@ -374,6 +374,8 @@ MonoBehaviour:
     m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
+  hasPositiveMagnet: 1
+  hasNegativeMagnet: 0
 --- !u!120 &-9169905456210293712
 LineRenderer:
   serializedVersion: 2

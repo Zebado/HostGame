@@ -7,14 +7,22 @@ using System;
 public class PlayerController : NetworkBehaviour
 {
     private NetworkCharacterControllerCustom _myCharacterController;
-    private bool polarityPlus, polarityNegative;
     private List<IActivable> activablesInRange = new List<IActivable>();
     [Header("LineRenderer")]
     [SerializeField] private LineRenderer myRend;
-    public float maxDistance = 2f; // La distancia máxima que deseas permitir
+    [SerializeField] private float maxDistance = 2f; // La distancia máxima que deseas permitir
     Camera cam;
-    public Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
+    [SerializeField] private Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
     RaycastHit hit;
+
+    [Header("Polarity")]
+    private bool polarityPlus, polarityNegative;
+    // Variables para rastrear cuántas veces la fuerza ha sido aplicada
+    private int positiveForceCount = 0;
+    private int negativeForceCount = 0;
+    [SerializeField] private int MaxForceCount = 2;
+
+    [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet;
     private void Awake()
     {
         cam = Camera.main;
@@ -43,19 +51,33 @@ public class PlayerController : NetworkBehaviour
         }
         
         //Polarity
-        if (networkInputData._negativePolarity)
+        if (networkInputData._negativePolarity && hasNegativeMagnet)
         {
-            if(polarityPlus)
+            if(polarityPlus && negativeForceCount > 0){
                 _myCharacterController.ApplyForce(hit.point, true);
-            else if(polarityNegative)
+                negativeForceCount--;
+            }
+            else if(polarityNegative && negativeForceCount > 0){
                 _myCharacterController.ApplyForce(hit.point, false);
+                negativeForceCount--;
+            }
         }
-        if (networkInputData._positivePolarity)
+        if (networkInputData._positivePolarity  && hasPositiveMagnet)
         {
-            if(polarityPlus)
+            if(polarityPlus && positiveForceCount > 0){
                 _myCharacterController.ApplyForce(hit.point, false);
-            else if(polarityNegative)
+                positiveForceCount--;
+            }
+            else if(polarityNegative && positiveForceCount > 0){
                 _myCharacterController.ApplyForce(hit.point, true);
+                positiveForceCount--;
+            }
+        }
+        // Resetear los contadores cuando toca el suelo
+        if (_myCharacterController.Grounded)
+        {
+            positiveForceCount = MaxForceCount;
+            negativeForceCount = MaxForceCount;
         }
 
     }
