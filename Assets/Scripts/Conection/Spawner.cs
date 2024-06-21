@@ -25,7 +25,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
                 cantOfPlayers++;
             }
         }
-    }
+    }   
     CharacterInputHandler _characterInputHandler;
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
