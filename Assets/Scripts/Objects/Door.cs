@@ -37,15 +37,13 @@ public class Door : MonoBehaviour, IActivable
     }
     private IEnumerator HandlePlayerDespawnAndSceneChange()
     {
-        yield return new WaitForSeconds(3.0f);
-
         if (_contadorUI != null)
         {
             _contadorUI.gameObject.SetActive(true);
         }
 
         int countdown = 3;
-        while (countdown > 0)
+        while (countdown >= 0)
         {
             _contadorUI.text = countdown.ToString();
             yield return new WaitForSeconds(1.0f);
