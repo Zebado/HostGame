@@ -23,9 +23,9 @@ public class SessionInfoItem : MonoBehaviour
     {
         _sessionInfo = sessionInfo;
 
-        _sessionNameText.text = sessionInfo.Name;
+        _sessionNameText.text = _sessionInfo.Name;
 
-        _sessionNameText.text = $"{_sessionInfo.PlayerCount}/{_sessionInfo.MaxPlayers}";
+        _playersCountText.text = $"{_sessionInfo.PlayerCount}/{_sessionInfo.MaxPlayers}";
 
         _joinButton.enabled = _sessionInfo.PlayerCount < _sessionInfo.MaxPlayers;
     }
