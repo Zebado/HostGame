@@ -17,11 +17,13 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             if(cantOfPlayers % 2 == 0){
-                runner.Spawn(_playerPrefab1, _spawnPlayerHost, null, player);
+                Transform spawnPoint = SpawnManager.Instance.GetSpawnPoint2();
+                runner.Spawn(_playerPrefab1, spawnPoint.position, spawnPoint.rotation, player);
                 cantOfPlayers++;
             }
             else{
-                runner.Spawn(_playerPrefab2, _spawnPlayerClient, null, player);
+                Transform spawnPoint = SpawnManager.Instance.GetSpawnPoint1();
+                runner.Spawn(_playerPrefab2, spawnPoint.position, spawnPoint.rotation, player);
                 cantOfPlayers++;
             }
         }
