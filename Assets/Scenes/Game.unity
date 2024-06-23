@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2287,8 +2287,8 @@ MonoBehaviour:
   TotalWords: 1
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000958341e27e40c91fd4d2bdeace438700
-  TriggerHashes: 000000009a2c4204
+  StateHashes: 00000000c0aec0d242e18c57d4d2bdeace43870034f9b24c7757814f
+  TriggerHashes: 00000000
 --- !u!1 &1380183601
 GameObject:
   m_ObjectHideFlags: 0

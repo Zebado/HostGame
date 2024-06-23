@@ -24,12 +24,12 @@ public class Door : MonoBehaviour, IActivable
     }
     public void ChangeToActive()
     {
-        GetComponent<SpriteRenderer>().sprite = doorActive;
+        _mecanim.Animator.SetBool("Active", true);
         GetComponent<BoxCollider>().enabled = true;
     }
     public void Activate()
     {
-        _mecanim.Animator.SetTrigger("Open");
+        _mecanim.Animator.SetBool("Open", true);
 
         StartCoroutine(HandlePlayerDespawnAndSceneChange());
 
