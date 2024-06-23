@@ -7,20 +7,16 @@ using TMPro;
 
 public class Door : MonoBehaviour, IActivable
 {
-    
+
     private NetworkMecanimAnimator _mecanim;
     public bool _active = false;
     private NetworkRunner _networkRunner;
-    [SerializeField] TextMeshProUGUI _contadorUI;
 
     private void Start()
     {
         _mecanim = GetComponent<NetworkMecanimAnimator>();
         _networkRunner = FindObjectOfType<NetworkRunner>();
-        if (_contadorUI != null)
-        {
-            _contadorUI.gameObject.SetActive(false);
-        }
+
     }
     public void ChangeToActive()
     {
@@ -33,22 +29,10 @@ public class Door : MonoBehaviour, IActivable
 
         StartCoroutine(HandlePlayerDespawnAndSceneChange());
 
-        Debug.Log("Object Activated!");
     }
     private IEnumerator HandlePlayerDespawnAndSceneChange()
     {
-        if (_contadorUI != null)
-        {
-            _contadorUI.gameObject.SetActive(true);
-        }
-
-        int countdown = 3;
-        while (countdown >= 0)
-        {
-            _contadorUI.text = countdown.ToString();
-            yield return new WaitForSeconds(1.0f);
-            countdown--;
-        }
+        yield return new WaitForSeconds(1.0f);
 
         DespawnPlayer();
 
