@@ -28,8 +28,8 @@ public class PlayerController : NetworkBehaviour
         cam = Camera.main;
         _myCharacterController = GetComponent<NetworkCharacterControllerCustom>();
         myRend = GetComponent<LineRenderer>();
-        if(HasStateAuthority)
-            myRend.enabled = false;
+        // Activar o desactivar el LineRenderer basado en la autoridad de entrada
+        myRend.enabled = !HasInputAuthority;
     }
 
     public override void FixedUpdateNetwork()
@@ -103,6 +103,8 @@ public class PlayerController : NetworkBehaviour
     }
 
     private void SetLineRenderer(){
+        if(!HasInputAuthority)
+            return;
 
         Vector3 currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
         currentPoint.z = 0;
