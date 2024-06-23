@@ -7,7 +7,7 @@ using TMPro;
 
 public class Door : MonoBehaviour, IActivable
 {
-    [SerializeField] Sprite doorActive;
+    
     private NetworkMecanimAnimator _mecanim;
     public bool _active = false;
     private NetworkRunner _networkRunner;

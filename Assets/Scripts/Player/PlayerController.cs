@@ -28,6 +28,8 @@ public class PlayerController : NetworkBehaviour
         cam = Camera.main;
         _myCharacterController = GetComponent<NetworkCharacterControllerCustom>();
         myRend = GetComponent<LineRenderer>();
+        if(HasStateAuthority)
+            myRend.enabled = false;
     }
 
     public override void FixedUpdateNetwork()

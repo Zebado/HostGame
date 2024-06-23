@@ -9,7 +9,6 @@ public class PlayerView : NetworkBehaviour
     private NetworkMecanimAnimator _mecanim;
     public override void Spawned()
     {
-        if (!HasStateAuthority) return;
 
         _mecanim = GetComponentInChildren<NetworkMecanimAnimator>();
             
