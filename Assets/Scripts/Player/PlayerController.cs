@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using Fusion;
 using System;
 
@@ -7,6 +8,8 @@ using System;
 public class PlayerController : NetworkBehaviour
 {
     private NetworkCharacterControllerCustom _myCharacterController;
+    [SerializeField] public int lives = 3;
+    [SerializeField] public bool vulnerable = true;
     private List<IActivable> activablesInRange = new List<IActivable>();
     [Header("LineRenderer")]
     [SerializeField] private LineRenderer myRend;
@@ -34,6 +37,8 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if(lives <= 0)
+            return;
         if (!GetInput(out NetworkInputData networkInputData)) return;
         //MOVIMIENTO
         Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
@@ -84,6 +89,21 @@ public class PlayerController : NetworkBehaviour
 
     }
 
+    public void TakeDamage(){
+        lives--;
+        if(lives <= 0)
+            Debug.Log("death");
+        else{
+            StartCoroutine(SetInvulnerable(1));
+        }
+    }
+    private IEnumerator SetInvulnerable(float duration)
+    {
+        vulnerable = false;
+        yield return new WaitForSeconds(duration);
+        vulnerable = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         IActivable activable = other.GetComponent<IActivable>();
@@ -92,6 +112,8 @@ public class PlayerController : NetworkBehaviour
             activablesInRange.Add(activable);
         }
     }
+
+
 
     private void OnTriggerExit(Collider other)
     {

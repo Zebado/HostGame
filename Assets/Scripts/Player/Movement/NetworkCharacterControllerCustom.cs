@@ -81,6 +81,11 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         Velocity = moveVelocity;
 
     }
+    public void TakeDamage(Vector3 targetPoint){
+        var moveVelocity = Velocity;
+        moveVelocity += targetPoint * (2);
+        Velocity = moveVelocity;
+    }
 
     public void ActivateObjects(List<IActivable> activablesInRange){
         foreach (var activable in activablesInRange)
