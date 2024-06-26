@@ -8,6 +8,8 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
 {
     public event Action<float> OnMovement = delegate {  };
     public event Action OnJump = delegate { };
+    public event Action OnDead = delegate { };
+    public event Action OnTakeDamage = delegate { };
     public event Action<bool> OnFall = delegate { };
 
     // Agregar un campo para la magnitud de la fuerza
@@ -85,6 +87,10 @@ public class NetworkCharacterControllerCustom : NetworkCharacterController
         var moveVelocity = Velocity;
         moveVelocity += targetPoint * (2);
         Velocity = moveVelocity;
+        OnTakeDamage();
+    }
+    public void Death(){
+        OnDead();
     }
 
     public void ActivateObjects(List<IActivable> activablesInRange){

@@ -28,14 +28,14 @@ public class Spikes : NetworkBehaviour
 
         if (playerController != null)
         {
-            if(playerController.vulnerable)
+            if(playerController.vulnerable && playerController.lives > 0)
                 playerController.TakeDamage();
         }
 
-        if (controller != null)
+        if (controller != null && playerController.lives > 0)
         {
             Vector3 pushDirection = (networkObject.transform.position - transform.position).normalized;
-            controller.ApplyForce(pushDirection, true);
+            controller.TakeDamage(pushDirection);
         }
     }
 }

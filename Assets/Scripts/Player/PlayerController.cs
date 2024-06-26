@@ -37,9 +37,9 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (!GetInput(out NetworkInputData networkInputData)) return;
         if(lives <= 0)
             return;
-        if (!GetInput(out NetworkInputData networkInputData)) return;
         //MOVIMIENTO
         Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
         _myCharacterController.Move(moveDirection);
@@ -92,7 +92,7 @@ public class PlayerController : NetworkBehaviour
     public void TakeDamage(){
         lives--;
         if(lives <= 0)
-            Debug.Log("death");
+            _myCharacterController.Death();
         else{
             StartCoroutine(SetInvulnerable(1));
         }

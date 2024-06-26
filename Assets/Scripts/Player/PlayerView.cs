@@ -19,7 +19,8 @@ public class PlayerView : NetworkBehaviour
         m.OnMovement += MoveAnimation;
         m.OnJump += JumpAnimation;
         m.OnFall += FallAnimation;
-        //m.OnDead += DeadAnimation;
+        m.OnTakeDamage += TakeDamageAnimation;
+        m.OnDead += DeadAnimation;
         //m.OnReset += ResetAnimation;
         //m.OnShoot += ShootAnimation;
         //m.OnShooting += RPC_TriggerShootingParticles;
@@ -31,7 +32,7 @@ public class PlayerView : NetworkBehaviour
     }
     void DeadAnimation()
     {
-        _mecanim.Animator.SetBool("isDead", true);
+        _mecanim.Animator.SetTrigger("isDead");
     }
     void ResetAnimation()
     {
@@ -45,5 +46,8 @@ public class PlayerView : NetworkBehaviour
     }
     void FallAnimation(bool state){
         _mecanim.Animator.SetBool("isFalling", state);
+    }
+    void TakeDamageAnimation(){
+        _mecanim.Animator.SetTrigger("takeDamage");
     }
 }
