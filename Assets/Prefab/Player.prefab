@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 654214388013602730}
   - component: {fileID: 9064843268614641600}
   - component: {fileID: -9169905456210293712}
+  - component: {fileID: -4335971886551158546}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -223,6 +224,7 @@ MonoBehaviour:
   - {fileID: 6776135327435725606}
   - {fileID: 654214388013602730}
   - {fileID: 9064843268614641600}
+  - {fileID: -4335971886551158546}
   - {fileID: 8337916675891012516}
   - {fileID: 7083429566762581732}
 --- !u!114 &6776135327435725606
@@ -269,7 +271,6 @@ MonoBehaviour:
   maxSpeed: 4
   rotationSpeed: 15
   forceMagnitude: 10
-  MaxForceCount: 2
 --- !u!114 &9064843268614641600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2b6041210f93543914c9122c04c17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lives: 3
+  vulnerable: 1
   myRend: {fileID: 0}
   maxDistance: 3
   defaultColor:
@@ -374,6 +377,7 @@ MonoBehaviour:
     m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
+  MaxForceCount: 2
   hasPositiveMagnet: 1
   hasNegativeMagnet: 0
 --- !u!120 &-9169905456210293712
@@ -480,3 +484,17 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-4335971886551158546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6571165067469940085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3af076c0c99ea64f91c40df71c2aac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  invulnerabilityDuration: 2

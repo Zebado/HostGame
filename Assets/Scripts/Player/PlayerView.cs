@@ -13,14 +13,15 @@ public class PlayerView : NetworkBehaviour
         _mecanim = GetComponentInChildren<NetworkMecanimAnimator>();
             
         var m = GetComponentInParent<NetworkCharacterControllerCustom>();
+        var h = GetComponentInParent<PlayerHealth>();
 
-        if (!m || !_mecanim) return;
+        if (!m || !_mecanim || !h) return;
 
         m.OnMovement += MoveAnimation;
         m.OnJump += JumpAnimation;
         m.OnFall += FallAnimation;
         m.OnTakeDamage += TakeDamageAnimation;
-        m.OnDead += DeadAnimation;
+        h.OnDead += DeadAnimation;
         //m.OnReset += ResetAnimation;
         //m.OnShoot += ShootAnimation;
         //m.OnShooting += RPC_TriggerShootingParticles;

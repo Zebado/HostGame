@@ -26,16 +26,16 @@ public class Spikes : NetworkBehaviour, ITraps
 
     public void Activate(NetworkObject networkObject){
 
-        PlayerController playerController = networkObject.GetComponent<PlayerController>();
+        PlayerHealth playerHealth = networkObject.GetComponent<PlayerHealth>();
         NetworkCharacterControllerCustom controller = networkObject.GetComponent<NetworkCharacterControllerCustom>();
 
-        if (playerController != null)
+        if (playerHealth != null)
         {
-            if(playerController.vulnerable && playerController.lives > 0)
-                playerController.TakeDamage();
+            if(playerHealth.health > 0)
+                playerHealth.TakeDamage(1);
         }
 
-        if (controller != null && playerController.lives > 0)
+        if (controller != null && playerHealth.health > 0)
         {
             Vector3 pushDirection = (networkObject.transform.position - transform.position).normalized;
             controller.TakeDamage(pushDirection);
