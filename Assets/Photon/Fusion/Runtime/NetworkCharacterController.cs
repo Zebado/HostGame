@@ -35,7 +35,7 @@ namespace Fusion {
     }
 
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(CharacterController))]
+    //[RequireComponent(typeof(CharacterController))]
     [NetworkBehaviourWeaved(NetworkCCData.WORDS)]
     // ReSharper disable once CheckNamespace
     public class NetworkCharacterController : NetworkTRSP, INetworkTRSPTeleport, IBeforeAllTicks, IAfterAllTicks, IBeforeCopyPreviousState

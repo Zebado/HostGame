@@ -6,7 +6,7 @@ using Fusion;
 public class PlayerHealth : NetworkBehaviour
 {
     public int health = 3;
-    public float invulnerabilityDuration = 2f;
+    public float invulnerabilityDuration = 1f;
     private bool isInvulnerable = false;
 
     public event Action OnDead;
@@ -18,12 +18,15 @@ public class PlayerHealth : NetworkBehaviour
         health -= amount;
         if (health <= 0)
         {
-            health = 0;
-            OnDead?.Invoke();
-            RPC_HandlePlayerDeath();
+            Death();
         }
 
         StartCoroutine(SetInvulnerable(invulnerabilityDuration));
+    }
+
+    public void Death(){
+        health = 0;
+        OnDead?.Invoke();
     }
 
     private IEnumerator SetInvulnerable(float duration)
@@ -33,9 +36,5 @@ public class PlayerHealth : NetworkBehaviour
         isInvulnerable = false;
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_HandlePlayerDeath()
-    {
-        GameManager.Instance.ShowDefeatMenu();
-    }
+    
 }

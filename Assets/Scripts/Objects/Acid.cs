@@ -27,17 +27,13 @@ public class Acid : NetworkBehaviour, ITraps
 
     public void Activate(NetworkObject networkObject){
 
-        PlayerController playerController = networkObject.GetComponent<PlayerController>();
+        PlayerHealth playerHealth = networkObject.GetComponent<PlayerHealth>();
         NetworkCharacterControllerCustom controller = networkObject.GetComponent<NetworkCharacterControllerCustom>();
 
-        if (controller != null && playerController.lives > 0)
+        if (playerHealth != null)
         {
-            controller.Death();
-        }
-        if (playerController != null)
-        {
-            if(playerController.vulnerable && playerController.lives > 0)
-                playerController.lives = 0;
+            if(playerHealth.health > 0)
+                playerHealth.Death();
         }
 
     }

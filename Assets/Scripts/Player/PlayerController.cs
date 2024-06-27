@@ -4,12 +4,11 @@ using System.Collections;
 using Fusion;
 using System;
 
-[RequireComponent(typeof(NetworkCharacterControllerCustom))]
+//[RequireComponent(typeof(NetworkCharacterControllerCustom))]
 public class PlayerController : NetworkBehaviour
 {
     private NetworkCharacterControllerCustom _myCharacterController;
-    [SerializeField] public int lives = 3;
-    [SerializeField] public bool vulnerable = true;
+    [SerializeField] public bool isDead = false;
     private List<IActivable> activablesInRange = new List<IActivable>();
     [Header("LineRenderer")]
     [SerializeField] private LineRenderer myRend;
@@ -30,6 +29,8 @@ public class PlayerController : NetworkBehaviour
     {
         cam = Camera.main;
         _myCharacterController = GetComponent<NetworkCharacterControllerCustom>();
+        var h = GetComponent<PlayerHealth>();
+        h.OnDead += DeathState;
         myRend = GetComponent<LineRenderer>();
         // Activar o desactivar el LineRenderer basado en la autoridad de entrada
         myRend.enabled = !HasInputAuthority;
@@ -38,7 +39,7 @@ public class PlayerController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData networkInputData)) return;
-        if(lives <= 0)
+        if(isDead)
             return;
         //MOVIMIENTO
         Vector3 moveDirection = Vector3.forward * networkInputData.movementInput;
@@ -88,20 +89,8 @@ public class PlayerController : NetworkBehaviour
         }
 
     }
-
-    public void TakeDamage(){
-        lives--;
-        if(lives <= 0)
-            _myCharacterController.Death();
-        else{
-            StartCoroutine(SetInvulnerable(1));
-        }
-    }
-    private IEnumerator SetInvulnerable(float duration)
-    {
-        vulnerable = false;
-        yield return new WaitForSeconds(duration);
-        vulnerable = true;
+    private void DeathState(){
+        isDead = true;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -51,4 +51,10 @@ public class PlayerView : NetworkBehaviour
     void TakeDamageAnimation(){
         _mecanim.Animator.SetTrigger("takeDamage");
     }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_HandlePlayerDeath()
+    {
+        GameManager.Instance.ShowDefeatMenu();
+    }
 }
