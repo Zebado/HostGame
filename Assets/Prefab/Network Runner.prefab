@@ -60,7 +60,7 @@ MonoBehaviour:
   _playerPrefab1:
     RawGuidValue: dcf4285440951b443bfee416947c11eb
   _playerPrefab2:
-    RawGuidValue: 85eb256898622de4cae03fe93e2c2c11
+    RawGuidValue: dcf4285440951b443bfee416947c11eb
   cantOfPlayers: 0
   _spawnPlayerHost: {x: 2, y: 1, z: 0}
   _spawnPlayerClient: {x: -2, y: 1, z: 0}

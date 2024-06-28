@@ -42,6 +42,9 @@
  </tile>
  <tile id="114">
   <image width="256" height="256" source="../../Art/Tiles/Spike.png"/>
+  <objectgroup draworder="index" id="3">
+   <object id="3" x="0" y="147" width="256" height="109"/>
+  </objectgroup>
  </tile>
  <tile id="115">
   <image width="256" height="256" source="../../Art/Tiles/Tile (1).png"/>

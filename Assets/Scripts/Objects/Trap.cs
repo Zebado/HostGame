@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public class Acid : NetworkBehaviour, ITraps
+public class Trap : NetworkBehaviour, ITraps
 {
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
@@ -27,13 +27,11 @@ public class Acid : NetworkBehaviour, ITraps
 
     public void Activate(NetworkObject networkObject){
 
-        PlayerHealth playerHealth = networkObject.GetComponent<PlayerHealth>();
-        NetworkCharacterControllerCustom controller = networkObject.GetComponent<NetworkCharacterControllerCustom>();
+        NewCharacterController controller = networkObject.GetComponent<NewCharacterController>();
 
-        if (playerHealth != null)
+        if (controller != null)
         {
-            if(playerHealth.health > 0)
-                playerHealth.Death();
+            controller.Death();
         }
 
     }

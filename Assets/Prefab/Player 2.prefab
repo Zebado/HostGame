@@ -150,11 +150,12 @@ GameObject:
   - component: {fileID: 5361093969280810203}
   - component: {fileID: 6776135327435725606}
   - component: {fileID: 8606618270496701473}
-  - component: {fileID: 654214388013602730}
-  - component: {fileID: 9064843268614641600}
+  - component: {fileID: 285881151751369010}
+  - component: {fileID: 1348696892593387568}
   - component: {fileID: -9169905456210293712}
   - component: {fileID: -4335971886551158546}
   - component: {fileID: 8092203964822881797}
+  - component: {fileID: 8421863172880443087}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -196,8 +197,8 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 6776135327435725606}
-  - {fileID: 654214388013602730}
-  - {fileID: 9064843268614641600}
+  - {fileID: 285881151751369010}
+  - {fileID: 1348696892593387568}
   - {fileID: -4335971886551158546}
   - {fileID: 8337916675891012516}
   - {fileID: 7083429566762581732}
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActivatePressed: 0
---- !u!114 &654214388013602730
+--- !u!114 &285881151751369010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,124 +236,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 6571165067469940085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76de0dc9b5ee5ed478499f8f034aacfa, type: 3}
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: -20
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
+--- !u!114 &1348696892593387568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6571165067469940085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a73841d7b8668418fba40d5e9b6dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
   jumpImpulse: 7
-  acceleration: 10
-  braking: 10
-  maxSpeed: 4
-  rotationSpeed: 15
-  forceMagnitude: 10
---- !u!114 &9064843268614641600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6571165067469940085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc2b6041210f93543914c9122c04c17d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDead: 0
-  myRend: {fileID: 0}
-  maxDistance: 3
-  defaultColor:
+  forceMagnitude: 1000
+  groundLayer:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 64571
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 62837
-    atime2: 65535
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 3
-  polarityPlusColor:
-    serializedVersion: 2
-    key0: {r: 1, g: 0.62911344, b: 0, a: 1}
-    key1: {r: 0.7490196, g: 0.07828595, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 54934
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 63608
-    atime2: 65535
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 3
-  polarityNegativeColor:
-    serializedVersion: 2
-    key0: {r: 0, g: 0.83930635, b: 1, a: 1}
-    key1: {r: 0, g: 0.24955654, b: 0.7490196, a: 1}
-    key2: {r: 0, g: 0.24955654, b: 0.7490196, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 771
-    ctime1: 51657
-    ctime2: 64571
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 63029
-    atime2: 65535
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 3
-  MaxForceCount: 2
-  hasPositiveMagnet: 1
-  hasNegativeMagnet: 0
+    m_Bits: 64
+  invulnerabilityDuration: 2
+  _IsDead: 0
 --- !u!120 &-9169905456210293712
 LineRenderer:
   serializedVersion: 2
@@ -503,7 +419,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.031958893, y: 0.10215627}
+  m_Offset: {x: -0.044742465, y: 0.021619856}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -514,5 +430,32 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5474621, y: 0.42240766}
+  m_Size: {x: 0.6395037, y: 0.6908624}
   m_EdgeRadius: 0
+--- !u!50 &8421863172880443087
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6571165067469940085}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 2
+  m_Material: {fileID: 6200000, guid: 80558aa8b409b2c4da772201f77162e7, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
