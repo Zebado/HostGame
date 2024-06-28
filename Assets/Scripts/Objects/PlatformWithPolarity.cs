@@ -9,23 +9,15 @@ public class PlatformWithPolarity : NetworkBehaviour
     [Networked] [SerializeField] public bool polarityMinus { get; set; }
     [Networked] [SerializeField] public bool isDisabled { get; set; }
 
-    [SerializeField] private Sprite spritePlus, spriteMinus, spriteActive, spriteDisabled;
+    [SerializeField] private Sprite spritePlus, spriteMinus, spriteDisabled;
     private SpriteRenderer myRend;
     private bool startSetSprite = false;
 
-    void Start()
+    public override void Spawned()
     {
         myRend = GetComponent<SpriteRenderer>();
-        StartCoroutine(InitializeSprites());
+        RPC_SetSprite();
         
-    }
-    IEnumerator InitializeSprites(){
-        yield return new WaitForSeconds(0.0001f);
-        startSetSprite = true;
-    }
-    public override void FixedUpdateNetwork(){
-        if (startSetSprite)
-            RPC_SetSprite();
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_SetSprite()
@@ -33,10 +25,6 @@ public class PlatformWithPolarity : NetworkBehaviour
         if (isDisabled)
         {
             myRend.sprite = spriteDisabled;
-        }
-        else if (polarityPlus && polarityMinus)
-        {
-            myRend.sprite = spriteActive;
         }
         else if (polarityPlus && !polarityMinus)
         {

@@ -189,12 +189,6 @@ public class NewCharacterController : NetworkBehaviour
                     polarityPlus = false;
                     polarityMinus = false;
                 }
-                else if (platform.polarityPlus && platform.polarityMinus)
-                {
-                    myRend.colorGradient = polarityPlusColor; // or some other color to indicate both polarities
-                    polarityPlus = true;
-                    polarityMinus = true;
-                }
                 else if (platform.polarityPlus && !platform.polarityMinus)
                 {
                     myRend.colorGradient = polarityPlusColor;
