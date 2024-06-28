@@ -21,7 +21,7 @@ public class Door : MonoBehaviour, IActivable
     public void ChangeToActive()
     {
         _mecanim.Animator.SetBool("Active", true);
-        GetComponent<BoxCollider>().enabled = true;
+        GetComponent<BoxCollider2D>().enabled = true;
     }
     public void Activate()
     {

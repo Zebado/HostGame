@@ -5,23 +5,30 @@ using Fusion;
 
 public class PlatformWithPolarity : NetworkBehaviour
 {
-    [Networked] [SerializeField] private bool polarityPlus { get; set; }
-    [Networked] [SerializeField] private bool polarityMinus { get; set; }
-    [Networked] [SerializeField] private bool isDisabled { get; set; }
+    [Networked] [SerializeField] public bool polarityPlus { get; set; }
+    [Networked] [SerializeField] public bool polarityMinus { get; set; }
+    [Networked] [SerializeField] public bool isDisabled { get; set; }
 
     [SerializeField] private Sprite spritePlus, spriteMinus, spriteActive, spriteDisabled;
     private SpriteRenderer myRend;
-    [SerializeField] private bool previousPolarityPlus;
-    [SerializeField] private bool previousPolarityMinus;
-    [SerializeField] private bool previousIsDisabled;
+    private bool startSetSprite = false;
 
-    void Awake()
+    void Start()
     {
         myRend = GetComponent<SpriteRenderer>();
+        StartCoroutine(InitializeSprites());
+        
     }
-
-
-    private void SetSprite()
+    IEnumerator InitializeSprites(){
+        yield return new WaitForSeconds(0.0001f);
+        startSetSprite = true;
+    }
+    public override void FixedUpdateNetwork(){
+        if (startSetSprite)
+            RPC_SetSprite();
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_SetSprite()
     {
         if (isDisabled)
         {
@@ -50,7 +57,7 @@ public class PlatformWithPolarity : NetworkBehaviour
     {
         polarityPlus = !polarityPlus;
         polarityMinus = !polarityMinus;
-        SetSprite();
+        RPC_SetSprite();
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -59,13 +66,24 @@ public class PlatformWithPolarity : NetworkBehaviour
         isDisabled = true;
         polarityPlus = false;
         polarityMinus = false;
-        SetSprite();
+        RPC_SetSprite();
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_Enable()
+    public void RPC_EnablePlus()
     {
         isDisabled = false;
-        SetSprite();
+        polarityPlus = true;
+        polarityMinus = false;
+        RPC_SetSprite();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_EnableMinus()
+    {
+        isDisabled = false;
+        polarityPlus = false;
+        polarityMinus = true;
+        RPC_SetSprite();
     }
 }

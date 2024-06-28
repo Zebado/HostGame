@@ -6,24 +6,53 @@ using Fusion;
 public class PressurePlate : NetworkBehaviour
 {
     [SerializeField] private PlatformWithPolarity platformToActivate;
-    [SerializeField] private bool playersOnPlate = false;
+    public PressurePlateType type;
+    public enum PressurePlateType
+    {
+        ChangePolarity,
+        SetPolarityPlus,
+        SetPolarityMinus
+    }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Arriba");
-            platformToActivate.RPC_Enable();
-            
+            switch (type)
+            {
+                case PressurePlateType.ChangePolarity:
+                    platformToActivate.RPC_ChangePolarity();
+                    break;
+                case PressurePlateType.SetPolarityPlus:
+                    platformToActivate.RPC_EnablePlus();
+                    break;
+                case PressurePlateType.SetPolarityMinus:
+                    platformToActivate.RPC_EnableMinus();
+                    break;  
+                default:
+                    break;
+            }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Afuera");
-            platformToActivate.RPC_Disable();
+            switch (type)
+            {
+                case PressurePlateType.ChangePolarity:
+                    platformToActivate.RPC_ChangePolarity();
+                    break;
+                case PressurePlateType.SetPolarityPlus:
+                    platformToActivate.RPC_Disable();
+                    break;
+                case PressurePlateType.SetPolarityMinus:
+                    platformToActivate.RPC_Disable();
+                    break;  
+                default:
+                    break;
+            }
         }
     }
 }

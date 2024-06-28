@@ -24,31 +24,55 @@ public class NewCharacterController : NetworkBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isGrounded;
 
+    [Header("LineRenderer")]
+    [SerializeField] private LineRenderer myRend;
+    [SerializeField] private float maxDistance = 2f; // La distancia máxima que deseas permitir
+    [SerializeField] private Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
+    private Camera cam;
+    RaycastHit2D hit;
+
+    [Header("Polarity")]
+    [SerializeField]private bool polarityPlus, polarityMinus;
+    private int positiveForceCount = 0;
+    private int negativeForceCount = 0;
+    [SerializeField] private int MaxForceCount = 2;
+    [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        cam = Camera.main;
+        myRend = GetComponent<LineRenderer>();
+        myRend.enabled = !HasInputAuthority;
     }
     public override void FixedUpdateNetwork()
     {
-        if (GetInput(out NetworkInputData inputData))
+        if (!GetInput(out NetworkInputData inputData)) return;
+        if(isDead)return;
+
+        Vector2 moveDirection = Vector2.right * inputData.movementInput;
+        Move(moveDirection);
+
+        SetLineRenderer();
+
+        if (inputData.networkButtons.IsSet(MyButtons.Jump))
         {
-            if(isDead)
-                return;
-            Vector2 moveDirection = Vector2.right * inputData.movementInput;
-            Move(moveDirection);
-            if (inputData.networkButtons.IsSet(MyButtons.Jump))
-            {
-                Jump();
-            }
-            if (inputData.networkButtons.IsSet(MyButtons.Activate))
-            {
-                ActivateObjects(activablesInRange);
-            }
+            Jump();
         }
+        if (inputData.networkButtons.IsSet(MyButtons.Activate))
+        {
+            ActivateObjects(activablesInRange);
+        }
+        HandlePolarity(inputData);
 
         CheckGroundStatus();
+        if (isGrounded)
+        {
+            positiveForceCount = MaxForceCount;
+            negativeForceCount = MaxForceCount;
+        }
     }
 
     private void Move(Vector2 direction)
@@ -85,6 +109,126 @@ public class NewCharacterController : NetworkBehaviour
         OnFall(!isGrounded);
     }
 
+    private void HandlePolarity(NetworkInputData inputData)
+    {
+        if (inputData._negativePolarity && hasNegativeMagnet)
+        {
+            if (polarityPlus && negativeForceCount > 0)
+            {
+                ApplyForce(hit.point, true);
+                StartCoroutine(ReduceForceCount(false, 0.1f));
+            }
+            else if (polarityMinus && negativeForceCount > 0)
+            {
+                ApplyForce(hit.point, false);
+                StartCoroutine(ReduceForceCount(false, 0.1f));
+            }
+        }
+
+        if (inputData._positivePolarity && hasPositiveMagnet)
+        {
+            if (polarityPlus && positiveForceCount > 0)
+            {
+                ApplyForce(hit.point, false);
+                StartCoroutine(ReduceForceCount(true, 0.1f));
+            }
+            else if (polarityMinus && positiveForceCount > 0)
+            {
+                ApplyForce(hit.point, true);
+                StartCoroutine(ReduceForceCount(true, 0.1f));
+            }
+        }
+    }
+
+    IEnumerator ReduceForceCount(bool forceCounter, float time){
+        yield return new WaitForSeconds(time);
+        if(forceCounter)
+            positiveForceCount--;
+        else
+            negativeForceCount--;
+    }
+
+    public void ApplyForce(Vector3 targetPoint, bool attract)
+    {
+              
+        Vector3 forceDirection = (targetPoint - transform.position).normalized;
+        if (!attract)
+        {
+            forceDirection = -forceDirection;
+        }
+        rb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
+
+    }
+
+    private void SetLineRenderer()
+    {
+        if (!HasInputAuthority) return;
+
+        Vector3 currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
+        currentPoint.z = 0;
+
+        Vector3 direction = currentPoint - transform.position;
+        float distance = direction.magnitude;
+
+        distance = Mathf.Clamp(distance,maxDistance, maxDistance);
+
+        Vector3 clampedPosition = transform.position + direction.normalized * distance;
+
+        myRend.SetPosition(0, transform.position);
+        myRend.SetPosition(1, clampedPosition);
+
+        hit = Physics2D.Raycast(transform.position, direction.normalized, distance, groundLayer); // Ensure the raycast checks the correct layer
+        if (hit.collider != null)
+        {
+            PlatformWithPolarity platform = hit.collider.GetComponent<PlatformWithPolarity>();
+            if (platform != null)
+            {
+                if (platform.isDisabled)
+                {
+                    myRend.colorGradient = defaultColor;
+                    polarityPlus = false;
+                    polarityMinus = false;
+                }
+                else if (platform.polarityPlus && platform.polarityMinus)
+                {
+                    myRend.colorGradient = polarityPlusColor; // or some other color to indicate both polarities
+                    polarityPlus = true;
+                    polarityMinus = true;
+                }
+                else if (platform.polarityPlus && !platform.polarityMinus)
+                {
+                    myRend.colorGradient = polarityPlusColor;
+                    polarityPlus = true;
+                    polarityMinus = false;
+                }
+                else if (!platform.polarityPlus && platform.polarityMinus)
+                {
+                    myRend.colorGradient = polarityNegativeColor;
+                    polarityPlus = false;
+                    polarityMinus = true;
+                }
+                else
+                {
+                    myRend.colorGradient = defaultColor;
+                    polarityPlus = false;
+                    polarityMinus = false;
+                }
+            }
+            else
+            {
+                myRend.colorGradient = defaultColor;
+                polarityPlus = false;
+                polarityMinus = false;
+            }
+        }
+        else
+        {
+            myRend.colorGradient = defaultColor;
+            polarityPlus = false;
+            polarityMinus = false;
+        }
+    }
+
     public void Death(){
         isDead = true;
         Move(Vector2.zero);
@@ -109,7 +253,9 @@ public class NewCharacterController : NetworkBehaviour
     }
 
     public void ActivateObjects(List<IActivable> activablesInRange){
-        foreach (var activable in activablesInRange)
+        // Usar una lista temporal para evitar la modificación de la colección durante la enumeración
+        List<IActivable> tempActivables = new List<IActivable>(activablesInRange);
+        foreach (var activable in tempActivables)
         {
             activable.Activate();
         }

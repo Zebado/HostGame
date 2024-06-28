@@ -15,7 +15,7 @@ public class Interruptor : MonoBehaviour, IActivable
         // Implementa la lógica de activación aquí
         door.ChangeToActive();
         _mecanim.Animator.SetBool("Active", true);
-        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 }
 

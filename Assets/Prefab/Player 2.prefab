@@ -263,12 +263,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpImpulse: 7
-  forceMagnitude: 1000
+  forceMagnitude: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  invulnerabilityDuration: 2
-  _IsDead: 0
+  myRend: {fileID: 0}
+  maxDistance: 3
+  defaultColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 64571
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 62837
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  polarityPlusColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.62911344, b: 0, a: 1}
+    key1: {r: 0.7490196, g: 0.07828595, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 54934
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 63608
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  polarityNegativeColor:
+    serializedVersion: 2
+    key0: {r: 0, g: 0.83930635, b: 1, a: 1}
+    key1: {r: 0, g: 0.24955654, b: 0.7490196, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 771
+    ctime1: 51657
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 63029
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  polarityPlus: 0
+  polarityNegative: 0
+  MaxForceCount: 1
+  hasPositiveMagnet: 1
+  hasNegativeMagnet: 0
 --- !u!120 &-9169905456210293712
 LineRenderer:
   serializedVersion: 2
@@ -385,8 +480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3af076c0c99ea64f91c40df71c2aac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
-  invulnerabilityDuration: 1
 --- !u!61 &8092203964822881797
 BoxCollider2D:
   m_ObjectHideFlags: 0
