@@ -24,8 +24,9 @@ public class PressurePlate : NetworkBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(_mecanim != null)
+            if(_mecanim != null){
                 _mecanim.Animator.SetBool("isPressed", true);
+            }
             switch (type)
             {
                 case PressurePlateType.ChangePolarity:

@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: st2u_x0y0-w72h257
+      name: Switch On
       rect:
         serializedVersion: 2
         x: 0
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      st2u_x0y0-w72h257: 194176643
+      Switch On: 194176643
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

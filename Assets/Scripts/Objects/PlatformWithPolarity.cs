@@ -11,13 +11,14 @@ public class PlatformWithPolarity : NetworkBehaviour
 
     [SerializeField] private Sprite spritePlus, spriteMinus, spriteDisabled;
     private SpriteRenderer myRend;
-    private bool startSetSprite = false;
 
     public override void Spawned()
     {
         myRend = GetComponent<SpriteRenderer>();
+    }
+
+    public override void FixedUpdateNetwork(){
         RPC_SetSprite();
-        
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_SetSprite()

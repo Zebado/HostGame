@@ -28,7 +28,7 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private LineRenderer myRend;
     [SerializeField] private float maxDistance = 2f; // La distancia máxima que deseas permitir
     [SerializeField] private Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
-    private Camera cam;
+    
     RaycastHit2D hit;
 
     [Header("Polarity")]
@@ -43,7 +43,7 @@ public class NewCharacterController : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        cam = Camera.main;
+        
         myRend = GetComponent<LineRenderer>();
         myRend.enabled = !HasInputAuthority;
     }
@@ -55,7 +55,7 @@ public class NewCharacterController : NetworkBehaviour
         Vector2 moveDirection = Vector2.right * inputData.movementInput;
         Move(moveDirection);
 
-        SetLineRenderer();
+        SetLineRenderer(inputData.mouseInput);
 
         if (inputData.networkButtons.IsSet(MyButtons.Jump))
         {
@@ -160,22 +160,16 @@ public class NewCharacterController : NetworkBehaviour
 
     }
 
-    private void SetLineRenderer()
+    private void SetLineRenderer(Vector3 mousePosition)
     {
-        if (!HasInputAuthority) return;
 
-        Vector3 currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        currentPoint.z = 0;
-
-        Vector3 direction = currentPoint - transform.position;
+        Vector3 direction = mousePosition  - transform.position;
         float distance = direction.magnitude;
 
         distance = Mathf.Clamp(distance,maxDistance, maxDistance);
 
         Vector3 clampedPosition = transform.position + direction.normalized * distance;
 
-        myRend.SetPosition(0, transform.position);
-        myRend.SetPosition(1, clampedPosition);
 
         hit = Physics2D.Raycast(transform.position, direction.normalized, distance, groundLayer); // Ensure the raycast checks the correct layer
         if (hit.collider != null)
@@ -221,6 +215,9 @@ public class NewCharacterController : NetworkBehaviour
             polarityPlus = false;
             polarityMinus = false;
         }
+        if (!HasInputAuthority) return;
+        myRend.SetPosition(0, transform.position);
+        myRend.SetPosition(1, clampedPosition);
     }
 
     public void Death(){

@@ -1753,6 +1753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1338562829}
+  activeSprite: {fileID: 194176643, guid: 774d6ad28af229645b1ac442b014b84f, type: 3}
 --- !u!114 &820594717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,6 +2251,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 743109069535133470, guid: 1304d391a03a2db4893f720f1cc39334, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -522757048, guid: 12b4c4162efeaf44f8051e85edd5bd2c, type: 3}
     - target: {fileID: 1798709755524700167, guid: 1304d391a03a2db4893f720f1cc39334, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.225
@@ -2302,6 +2307,10 @@ PrefabInstance:
       propertyPath: SortKey
       value: 222154199
       objectReference: {fileID: 0}
+    - target: {fileID: 6717132849565053820, guid: 1304d391a03a2db4893f720f1cc39334, type: 3}
+      propertyPath: spritePlus
+      value: 
+      objectReference: {fileID: 416047889, guid: c1e9380dd1c24e54784ac59b1e97d187, type: 3}
     - target: {fileID: 6717132849565053820, guid: 1304d391a03a2db4893f720f1cc39334, type: 3}
       propertyPath: _isDisabled
       value: 0
