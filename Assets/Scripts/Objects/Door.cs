@@ -3,43 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using UnityEngine.SceneManagement;
-using TMPro;
 
-public class Door : MonoBehaviour, IActivable
+public class Door : NetworkBehaviour, IActivable
 {
 
     private NetworkMecanimAnimator _mecanim;
-    public bool _active = false;
     private NetworkRunner _networkRunner;
     private int playerCount = 0;
 
-    private void Start()
+    [SerializeField] private Sprite enabledDoor, activeDoor;
+    private SpriteRenderer myRend;
+
+    public override void Spawned()
     {
         _mecanim = GetComponent<NetworkMecanimAnimator>();
         _networkRunner = FindObjectOfType<NetworkRunner>();
-
+        myRend = GetComponent<SpriteRenderer>();
     }
     public void ChangeToActive()
     {
-        _mecanim.Animator.SetBool("Active", true);
+        RPC_ChangeToEnable();
         GetComponent<BoxCollider2D>().enabled = true;
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")){
             playerCount++;
+            if(playerCount >= 2)
+                RPC_ChangeToActive();
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")){
             playerCount--;
+            if(playerCount < 2)
+                RPC_ChangeToEnable();
         }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_ChangeToEnable(){
+        myRend.sprite = enabledDoor;
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_ChangeToActive(){
+        myRend.sprite = activeDoor;
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_OpenDoor(){
+        var anim = GetComponent<Animator>().enabled = true;
+        _mecanim.Animator.SetBool("Open", true);
+
+        StartCoroutine(HandlePlayerDespawnAndSceneChange());
     }
     public void Activate()
     {
         if(playerCount >= 2){
-            _mecanim.Animator.SetBool("Open", true);
-
-            StartCoroutine(HandlePlayerDespawnAndSceneChange());
+            RPC_OpenDoor();
         }
 
     }

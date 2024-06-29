@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-public class Interruptor : MonoBehaviour, IActivable
+public class Interruptor : NetworkBehaviour, IActivable
 {
     [SerializeField] private Door door;
     [SerializeField] private Sprite activeSprite;
     private SpriteRenderer myRend;
     //private NetworkMecanimAnimator _mecanim;
-    private void Start() {
+    public override void Spawned() {
         //_mecanim = GetComponent<NetworkMecanimAnimator>();
         myRend = GetComponent<SpriteRenderer>();
     }
@@ -21,7 +21,7 @@ public class Interruptor : MonoBehaviour, IActivable
         GetComponent<BoxCollider2D>().enabled = false;
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_ChangeSprite(){
+    private void RPC_ChangeSprite(){
         myRend.sprite = activeSprite;
     }
 }
