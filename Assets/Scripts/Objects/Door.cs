@@ -11,6 +11,7 @@ public class Door : MonoBehaviour, IActivable
     private NetworkMecanimAnimator _mecanim;
     public bool _active = false;
     private NetworkRunner _networkRunner;
+    private int playerCount = 0;
 
     private void Start()
     {
@@ -23,11 +24,23 @@ public class Door : MonoBehaviour, IActivable
         _mecanim.Animator.SetBool("Active", true);
         GetComponent<BoxCollider2D>().enabled = true;
     }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Player")){
+            playerCount++;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Player")){
+            playerCount--;
+        }
+    }
     public void Activate()
     {
-        _mecanim.Animator.SetBool("Open", true);
+        if(playerCount >= 2){
+            _mecanim.Animator.SetBool("Open", true);
 
-        StartCoroutine(HandlePlayerDespawnAndSceneChange());
+            StartCoroutine(HandlePlayerDespawnAndSceneChange());
+        }
 
     }
     private IEnumerator HandlePlayerDespawnAndSceneChange()
