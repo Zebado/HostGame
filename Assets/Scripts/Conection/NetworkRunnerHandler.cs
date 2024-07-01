@@ -55,9 +55,13 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     #region Lobby
     public void JoinLobby()
     {
-        if (_currentRunner) Destroy(_currentRunner.gameObject);
+        if (_currentRunner != null)
+        {
+            Destroy(_currentRunner.gameObject);
+        }
 
         _currentRunner = Instantiate(_runnerPrefab);
+        DontDestroyOnLoad(_currentRunner.gameObject);
 
         _currentRunner.AddCallbacks(this);
 
@@ -85,13 +89,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     #region Used Runner Callbacks
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        //if (sessionList.Count == 0) return;
 
-        //var session = sessionList[0];
-
-        //Debug.Log($"[Custom msg] joining {session.Name}");
-
-        //JoinGame(session);
         OnSessionListUpdate(sessionList);
     }
     #endregion

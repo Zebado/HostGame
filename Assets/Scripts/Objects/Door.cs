@@ -20,74 +20,91 @@ public class Door : NetworkBehaviour, IActivable
         _networkRunner = FindObjectOfType<NetworkRunner>();
         myRend = GetComponent<SpriteRenderer>();
     }
+
     public void ChangeToActive()
     {
         RPC_ChangeToEnable();
         GetComponent<BoxCollider2D>().enabled = true;
     }
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player")){
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
             playerCount++;
-            if(playerCount >= 2)
+            if (playerCount >= 2)
                 RPC_ChangeToActive();
         }
     }
-    private void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player")){
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
             playerCount--;
-            if(playerCount < 2)
+            if (playerCount < 2)
                 RPC_ChangeToEnable();
         }
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_ChangeToEnable(){
+    private void RPC_ChangeToEnable()
+    {
         myRend.sprite = enabledDoor;
     }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_ChangeToActive(){
+    private void RPC_ChangeToActive()
+    {
         myRend.sprite = activeDoor;
     }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_OpenDoor(){
+    private void RPC_OpenDoor()
+    {
         var anim = GetComponent<Animator>().enabled = true;
         _mecanim.Animator.SetBool("Open", true);
 
-        StartCoroutine(HandlePlayerDespawnAndSceneChange());
+        StartCoroutine(ChangeSceneForAll());
     }
+
     public void Activate()
     {
-        if(playerCount >= 2){
+        if (playerCount >= 2)
+        {
             RPC_OpenDoor();
         }
-
     }
-    private IEnumerator HandlePlayerDespawnAndSceneChange()
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private IEnumerator ChangeSceneForAll()
     {
         yield return new WaitForSeconds(1.0f);
 
-        DespawnPlayer();
-
-        ChangeScene();
+        if (_networkRunner != null && _networkRunner.IsServer)
+        {
+            RPC_ChangeScene("Level2");
+        }
     }
-    private void DespawnPlayer()
+
+    private void DespawnPlayers()
     {
         if (_networkRunner != null)
         {
-            NetworkPlayer localPlayer = NetworkPlayer.Local;
-            if (localPlayer != null)
+            foreach (var player in _networkRunner.ActivePlayers)
             {
-                NetworkObject localNetworkObject = localPlayer.GetComponent<NetworkObject>();
-                if (localNetworkObject != null)
+                var networkObject = _networkRunner.GetPlayerObject(player);
+                if (networkObject != null)
                 {
-                    _networkRunner.Despawn(localNetworkObject);
+                    _networkRunner.Despawn(networkObject);
                 }
             }
         }
-    }
-    private void ChangeScene()
-    {
-        SceneManager.LoadScene("Level2");
     }
 }
 

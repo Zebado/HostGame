@@ -7,7 +7,7 @@ using System;
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
-    [SerializeField] NetworkPrefabRef _playerPrefab1,_playerPrefab2;
+    [SerializeField] NetworkPrefabRef _playerPrefab1, _playerPrefab2;
     [SerializeField] private int cantOfPlayers;
     [SerializeField] Vector3 _spawnPlayerHost;
     [SerializeField] Vector3 _spawnPlayerClient;
@@ -16,32 +16,34 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (runner.IsServer)
         {
-            if(cantOfPlayers % 2 == 0){
+            if (cantOfPlayers % 2 == 0)
+            {
                 Transform spawnPoint = SpawnManager.Instance.GetSpawnPoint2();
                 runner.Spawn(_playerPrefab1, spawnPoint.position, spawnPoint.rotation, player);
                 cantOfPlayers++;
             }
-            else{
+            else
+            {
                 Transform spawnPoint = SpawnManager.Instance.GetSpawnPoint1();
                 runner.Spawn(_playerPrefab2, spawnPoint.position, spawnPoint.rotation, player);
                 cantOfPlayers++;
             }
         }
-    }   
+    }
     CharacterInputHandler _characterInputHandler;
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         if (!NetworkPlayer.Local) return;
         _characterInputHandler ??= NetworkPlayer.Local.GetComponent<CharacterInputHandler>();
 
-        //aca mandamos la "caja" con los inputs a travez de la red hacia el host.
+        //Enviar inputs a través de la red al host.
         input.Set(_characterInputHandler.GetLocalInputs());
     }
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) 
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
     {
-
     }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
         cantOfPlayers--;
     }
 
