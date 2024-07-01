@@ -9,6 +9,7 @@ public class Door : NetworkBehaviour, IActivable
 
     private NetworkMecanimAnimator _mecanim;
     private NetworkRunner _networkRunner;
+    private NetworkRunnerHandler _networkRunnerHandler;
     private int playerCount = 0;
 
     [SerializeField] private Sprite enabledDoor, activeDoor;
@@ -18,12 +19,13 @@ public class Door : NetworkBehaviour, IActivable
     {
         _mecanim = GetComponent<NetworkMecanimAnimator>();
         _networkRunner = FindObjectOfType<NetworkRunner>();
+        _networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
         myRend = GetComponent<SpriteRenderer>();
     }
 
     public void ChangeToActive()
     {
-        RPC_ChangeToEnable();
+        RPC_ChangeToActive();
         GetComponent<BoxCollider2D>().enabled = true;
     }
 
@@ -62,7 +64,7 @@ public class Door : NetworkBehaviour, IActivable
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_OpenDoor()
     {
-        var anim = GetComponent<Animator>().enabled = true;
+        GetComponent<Animator>().enabled = true;
         _mecanim.Animator.SetBool("Open", true);
 
         StartCoroutine(ChangeSceneForAll());
@@ -76,19 +78,15 @@ public class Door : NetworkBehaviour, IActivable
         }
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_ChangeScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
 
     private IEnumerator ChangeSceneForAll()
     {
         yield return new WaitForSeconds(1.0f);
 
-        if (_networkRunner != null && _networkRunner.IsServer)
+        if (_networkRunner != null && _networkRunner.IsServer && _networkRunnerHandler != null)
         {
-            RPC_ChangeScene("Level2");
+            _networkRunnerHandler.ChangeScene("Level2"); 
+            Debug.Log("llamo a changescene");
         }
     }
 

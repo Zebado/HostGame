@@ -84,6 +84,28 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
             //CreateGame("x", "Game");
         }
     }
+    public void ChangeScene(string sceneName)
+    {
+        Debug.Log("llamaron a change scene");
+        if (_currentRunner.IsServer)
+        {
+            int sceneIndex = SceneUtility.GetBuildIndexByScenePath($"Scenes/{sceneName}");
+            if (sceneIndex >= 0)
+            {
+                Debug.Log("cambiando de escena  ");
+
+                SceneManager.LoadScene(sceneIndex);
+            }
+            else
+            {
+                Debug.LogError($"Scene '{sceneName}' not found in Build Settings.");
+            }
+        }
+        else
+        {
+            Debug.LogError("ChangeScene can only be called on the server.");
+        }
+    }
     #endregion
 
     #region Used Runner Callbacks
