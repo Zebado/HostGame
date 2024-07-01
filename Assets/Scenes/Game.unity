@@ -3030,6 +3030,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5617332225441350586, guid: df4f3332a5f2cec4aae4c4a2eb6d0180, type: 3}
+      propertyPath: isSwitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5617332225441350586, guid: df4f3332a5f2cec4aae4c4a2eb6d0180, type: 3}
       propertyPath: platformToActivate.Array.size
       value: 2
       objectReference: {fileID: 0}

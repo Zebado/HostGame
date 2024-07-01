@@ -17,7 +17,7 @@ public class PlatformWithPolarity : NetworkBehaviour
         myRend = GetComponent<SpriteRenderer>();
     }
 
-    public override void FixedUpdateNetwork(){
+    private void LateUpdate() {
         RPC_SetSprite();
     }
     [Rpc(RpcSources.All, RpcTargets.All)]

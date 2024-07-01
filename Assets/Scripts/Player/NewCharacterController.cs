@@ -36,7 +36,7 @@ public class NewCharacterController : NetworkBehaviour
     private int positiveForceCount = 0;
     private int negativeForceCount = 0;
     [SerializeField] private int MaxForceCount = 2;
-    [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet;
+    [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet, reduceforceMagnitude, canMove;
 
 
     private void Awake()
@@ -44,6 +44,8 @@ public class NewCharacterController : NetworkBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
+        canMove = true;
+        reduceforceMagnitude = false;
         myRend = GetComponent<LineRenderer>();
         myRend.enabled = !HasInputAuthority;
     }
@@ -52,8 +54,10 @@ public class NewCharacterController : NetworkBehaviour
         if (!GetInput(out NetworkInputData inputData)) return;
         if(isDead)return;
 
-        Vector2 moveDirection = Vector2.right * inputData.movementInput;
-        Move(moveDirection);
+        if(canMove){
+            Vector2 moveDirection = Vector2.right * inputData.movementInput;
+            Move(moveDirection);
+        }
 
         SetLineRenderer(inputData.mouseInput);
 
@@ -116,12 +120,12 @@ public class NewCharacterController : NetworkBehaviour
             if (polarityPlus && negativeForceCount > 0)
             {
                 ApplyForce(hit.point, true);
-                StartCoroutine(ReduceForceCount(false, 0.1f));
+                StartCoroutine(ReduceForceCount(false, 0.2f));
             }
             else if (polarityMinus && negativeForceCount > 0)
             {
                 ApplyForce(hit.point, false);
-                StartCoroutine(ReduceForceCount(false, 0.1f));
+                StartCoroutine(ReduceForceCount(false, 0.2f));
             }
         }
 
@@ -130,22 +134,32 @@ public class NewCharacterController : NetworkBehaviour
             if (polarityPlus && positiveForceCount > 0)
             {
                 ApplyForce(hit.point, false);
-                StartCoroutine(ReduceForceCount(true, 0.1f));
+                StartCoroutine(ReduceForceCount(true, 0.2f));
             }
             else if (polarityMinus && positiveForceCount > 0)
             {
                 ApplyForce(hit.point, true);
-                StartCoroutine(ReduceForceCount(true, 0.1f));
+                StartCoroutine(ReduceForceCount(true, 0.2f));
             }
         }
     }
 
     IEnumerator ReduceForceCount(bool forceCounter, float time){
+        reduceforceMagnitude = true;
         yield return new WaitForSeconds(time);
+        reduceforceMagnitude = false;
         if(forceCounter)
             positiveForceCount--;
         else
             negativeForceCount--;
+    }
+    IEnumerator EnableCanMove(){
+        //var auxGravity = rb.gravityScale;
+        //rb.gravityScale = 0;
+        canMove = false;
+        yield return new WaitForSeconds(0.15f);
+        canMove = true;  
+        //rb.gravityScale = auxGravity;
     }
 
     public void ApplyForce(Vector3 targetPoint, bool attract)
@@ -155,8 +169,16 @@ public class NewCharacterController : NetworkBehaviour
         if (!attract)
         {
             forceDirection = -forceDirection;
+            if(reduceforceMagnitude)
+                rb.AddForce(forceDirection * (forceMagnitude * 0.8f), ForceMode2D.Impulse);
+            else
+                rb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
         }
-        rb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
+        else{
+            StartCoroutine(EnableCanMove());
+            //rb.velocity = Vector2.zero;
+            rb.AddForce(forceDirection * (forceMagnitude * 1.5f), ForceMode2D.Impulse);
+        }
 
     }
 
@@ -170,8 +192,8 @@ public class NewCharacterController : NetworkBehaviour
 
         Vector3 clampedPosition = transform.position + direction.normalized * distance;
 
-
         hit = Physics2D.Raycast(transform.position, direction.normalized, distance, groundLayer); // Ensure the raycast checks the correct layer
+        
         if (hit.collider != null)
         {
             PlatformWithPolarity platform = hit.collider.GetComponent<PlatformWithPolarity>();

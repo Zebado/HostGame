@@ -263,7 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpImpulse: 7
-  forceMagnitude: 10
+  forceMagnitude: 7
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -360,7 +360,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
   polarityPlus: 0
-  polarityNegative: 0
+  polarityMinus: 0
   MaxForceCount: 1
   hasPositiveMagnet: 1
   hasNegativeMagnet: 0
