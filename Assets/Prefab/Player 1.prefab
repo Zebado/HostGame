@@ -267,9 +267,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
   myRend: {fileID: 0}
   maxDistance: 3
   defaultColor:
@@ -525,7 +522,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.6395037, y: 0.6237788}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.011
 --- !u!50 &8421863172880443087
 Rigidbody2D:
   serializedVersion: 4
