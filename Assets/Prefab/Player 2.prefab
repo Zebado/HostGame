@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 265509997, guid: bba88a5fa9fad7c40aeba48ff2025dff, type: 3}
+  m_Sprite: {fileID: -556124705, guid: 4d31f3e1b2d60ad428f5cbc8f8aceccd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 5003942426544353305}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a61319feee8b7e6468f66cb05bb95bb1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6aa409a84c708894fbaca8a7e74c385b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 2806451007
+  SortKey: 535150012
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -362,8 +362,10 @@ MonoBehaviour:
   polarityPlus: 0
   polarityMinus: 0
   MaxForceCount: 1
-  hasPositiveMagnet: 1
-  hasNegativeMagnet: 0
+  hasPositiveMagnet: 0
+  hasNegativeMagnet: 1
+  reduceforceMagnitude: 0
+  canMove: 0
 --- !u!120 &-9169905456210293712
 LineRenderer:
   serializedVersion: 2
@@ -512,7 +514,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.044742465, y: 0.021619856}
+  m_Offset: {x: -0.00999999, y: -0.003541842}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -523,7 +525,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6395037, y: 0.6908624}
+  m_Size: {x: 0.6395037, y: 0.6237788}
   m_EdgeRadius: 0
 --- !u!50 &8421863172880443087
 Rigidbody2D:

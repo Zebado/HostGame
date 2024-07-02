@@ -6,9 +6,15 @@
  </properties>
  <tile id="102">
   <image width="256" height="256" source="../../Art/Tiles/Acid (1).png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="87" width="256" height="169"/>
+  </objectgroup>
  </tile>
  <tile id="103">
   <image width="256" height="256" source="../../Art/Tiles/Acid (2).png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="256" height="256"/>
+  </objectgroup>
  </tile>
  <tile id="104">
   <image width="256" height="256" source="../../Art/Tiles/BGTile (1).png"/>
@@ -30,6 +36,10 @@
  </tile>
  <tile id="110">
   <image width="256" height="256" source="../../Art/Tiles/BGTile (7).png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="256" height="256"/>
+   <object id="3" x="0" y="0" width="256" height="256"/>
+  </objectgroup>
  </tile>
  <tile id="111">
   <image width="256" height="256" source="../../Art/Tiles/Fence (1).png"/>

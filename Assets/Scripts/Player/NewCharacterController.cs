@@ -32,11 +32,11 @@ public class NewCharacterController : NetworkBehaviour
     RaycastHit2D hit;
 
     [Header("Polarity")]
-    [SerializeField]private bool polarityPlus, polarityMinus;
+    private bool polarityPlus, polarityMinus, reduceforceMagnitude, canMove;
     private int positiveForceCount = 0;
     private int negativeForceCount = 0;
     [SerializeField] private int MaxForceCount = 2;
-    [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet, reduceforceMagnitude, canMove;
+    [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet;
 
 
     private void Awake()
@@ -166,6 +166,7 @@ public class NewCharacterController : NetworkBehaviour
     {
               
         Vector3 forceDirection = (targetPoint - transform.position).normalized;
+        StartCoroutine(EnableCanMove());
         if (!attract)
         {
             forceDirection = -forceDirection;
@@ -175,7 +176,6 @@ public class NewCharacterController : NetworkBehaviour
                 rb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
         }
         else{
-            StartCoroutine(EnableCanMove());
             //rb.velocity = Vector2.zero;
             rb.AddForce(forceDirection * (forceMagnitude * 1.5f), ForceMode2D.Impulse);
         }
@@ -264,7 +264,18 @@ public class NewCharacterController : NetworkBehaviour
             activablesInRange.Remove(activable);
         }
     }
-
+    private void OnCollisionStay2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Player")){
+            isGrounded = true;
+            OnFall(!isGrounded);
+        }
+    }
+    private void OnCollisionExit2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Player")){
+            isGrounded = false;
+            OnFall(!isGrounded);
+        }
+    }
     public void ActivateObjects(List<IActivable> activablesInRange){
         // Usar una lista temporal para evitar la modificación de la colección durante la enumeración
         List<IActivable> tempActivables = new List<IActivable>(activablesInRange);
