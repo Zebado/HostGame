@@ -17,7 +17,10 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public event Action<List<SessionInfo>> OnSessionListUpdate = delegate { };
 
-
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     #region Join / Create Game
 
     public async void CreateGame(string sessionName, string sceneName)
@@ -58,6 +61,8 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         if (_currentRunner) Destroy(_currentRunner.gameObject);
 
         _currentRunner = Instantiate(_runnerPrefab);
+
+        DontDestroyOnLoad(_currentRunner.gameObject);
 
         _currentRunner.AddCallbacks(this);
 
