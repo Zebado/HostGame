@@ -9,8 +9,6 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     [SerializeField] NetworkPrefabRef _playerPrefab1,_playerPrefab2;
     [SerializeField] private int cantOfPlayers;
-    [SerializeField] Vector3 _spawnPlayerHost;
-    [SerializeField] Vector3 _spawnPlayerClient;
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
