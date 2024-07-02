@@ -266,14 +266,18 @@ public class NewCharacterController : NetworkBehaviour
     }
     private void OnCollisionStay2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
-            isGrounded = true;
-            OnFall(!isGrounded);
+            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.35f){
+                isGrounded = true;
+                OnFall(!isGrounded);
+            }
         }
     }
     private void OnCollisionExit2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
-            isGrounded = false;
-            OnFall(!isGrounded);
+            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.35f){
+                isGrounded = false;
+                OnFall(!isGrounded);
+            }
         }
     }
     public void ActivateObjects(List<IActivable> activablesInRange){

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3668535842423589020}
   - component: {fileID: 8337916675891012516}
   - component: {fileID: 7083429566762581732}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: -4335971886551158546}
   - component: {fileID: 8092203964822881797}
   - component: {fileID: 8421863172880443087}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -267,6 +267,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
   myRend: {fileID: 0}
   maxDistance: 3
   defaultColor:
@@ -359,13 +362,9 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
-  polarityPlus: 0
-  polarityMinus: 0
   MaxForceCount: 1
   hasPositiveMagnet: 0
   hasNegativeMagnet: 1
-  reduceforceMagnitude: 0
-  canMove: 0
 --- !u!120 &-9169905456210293712
 LineRenderer:
   serializedVersion: 2
