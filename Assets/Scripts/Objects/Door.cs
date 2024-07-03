@@ -60,7 +60,6 @@ public class Door : NetworkBehaviour, IActivable
         if(playerCount >= 2){
             RPC_OpenDoor();
         }
-
     }
     private IEnumerator HandlePlayerDespawnAndSceneChange()
     {
