@@ -22,7 +22,7 @@ public class NewCharacterController : NetworkBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
-    private bool isGrounded;
+    [Networked] public bool isGrounded { get; set; }
 
     [Header("LineRenderer")]
     [SerializeField] private LineRenderer myRend;
