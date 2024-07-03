@@ -74,9 +74,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 975603243
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 416047889, guid: c1e9380dd1c24e54784ac59b1e97d187, type: 3}
+  m_Sprite: {fileID: 729148957, guid: 4531c7bc40ae6de4f84ea91672b99804, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,11 +104,7 @@ MonoBehaviour:
   _isDisabled: 0
   spritePlus: {fileID: 416047889, guid: c1e9380dd1c24e54784ac59b1e97d187, type: 3}
   spriteMinus: {fileID: -522757048, guid: 12b4c4162efeaf44f8051e85edd5bd2c, type: 3}
-  spriteActive: {fileID: -1434838194, guid: 1f00ca204f15d01408962b293cf4cec3, type: 3}
   spriteDisabled: {fileID: 729148957, guid: 4531c7bc40ae6de4f84ea91672b99804, type: 3}
-  previousPolarityPlus: 0
-  previousPolarityMinus: 0
-  previousIsDisabled: 0
 --- !u!114 &6186410208421459236
 MonoBehaviour:
   m_ObjectHideFlags: 0
