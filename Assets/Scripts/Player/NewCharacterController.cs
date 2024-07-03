@@ -266,7 +266,7 @@ public class NewCharacterController : NetworkBehaviour
     }
     private void OnCollisionStay2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
-            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.35f){
+            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.4f){
                 isGrounded = true;
                 OnFall(!isGrounded);
             }
@@ -274,7 +274,8 @@ public class NewCharacterController : NetworkBehaviour
     }
     private void OnCollisionExit2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
-            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.35f){
+            Debug.Log("Player");
+            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.4f){
                 isGrounded = false;
                 OnFall(!isGrounded);
             }
