@@ -12,16 +12,17 @@ public class CharacterInputHandler : MonoBehaviour
 
     void Start()
     {
-        cam = Camera.main;
         _inputData = new NetworkInputData();
     }
 
     void Update()
     {
         _inputData.movementInput = Input.GetAxisRaw("Horizontal");
-        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
-        _inputData.mouseInput = mousePosition;
+        if(cam != null){
+            Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+            _inputData.mouseInput = mousePosition;
+        }
 
         _isJumpPressed |= Input.GetKeyDown(KeyCode.W);
 
@@ -35,6 +36,9 @@ public class CharacterInputHandler : MonoBehaviour
         {
             _isPositivePolarity = true;
         }
+    }
+    private void FixedUpdate() {
+        cam = Camera.main;
     }
 
     public NetworkInputData GetLocalInputs()
