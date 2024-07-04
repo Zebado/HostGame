@@ -15,6 +15,7 @@ public class Door : NetworkBehaviour, IActivable
 
     [SerializeField] private Sprite enabledDoor, activeDoor;
     private SpriteRenderer myRend;
+    [SerializeField] private string sceneName;
 
     public override void Spawned()
     {
@@ -70,7 +71,6 @@ public class Door : NetworkBehaviour, IActivable
     {
         yield return new WaitForSeconds(1.0f);
 
-        DespawnPlayer();
 
         ChangeScene();
     }
@@ -91,8 +91,10 @@ public class Door : NetworkBehaviour, IActivable
     }
     private void ChangeScene()
     {
+        if(!HasStateAuthority) return;
         var runnerHandler = FindObjectOfType<NetworkRunnerHandler>();
-        runnerHandler.ChangeScene();
+        runnerHandler.ChangeScene(sceneName);
+        
     }
 }
 

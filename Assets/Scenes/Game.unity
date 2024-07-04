@@ -714,6 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb879e5805e2044c9d3abf2309c27ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _networkHandler: {fileID: 0}
   defeatMenu: {fileID: 8731716199508819951}
 --- !u!4 &516878604
 Transform:
@@ -3875,7 +3876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2833835736838211219, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.9499999
+      value: -1.5925
       objectReference: {fileID: 0}
     - target: {fileID: 2833835736838211219, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3908,6 +3909,10 @@ PrefabInstance:
     - target: {fileID: 2833835736838211219, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406782255488917772, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
+      propertyPath: sceneName
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 3951915696923081381, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_Name
