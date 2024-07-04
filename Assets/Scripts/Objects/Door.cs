@@ -48,11 +48,13 @@ public class Door : NetworkBehaviour, IActivable
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_ChangeToEnable(){
-        myRend.sprite = enabledDoor;
+        if(myRend != null)
+            myRend.sprite = enabledDoor;
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_ChangeToActive(){
-        myRend.sprite = activeDoor;
+        if(myRend != null)
+            myRend.sprite = activeDoor;
     }
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_OpenDoor(){
@@ -72,7 +74,10 @@ public class Door : NetworkBehaviour, IActivable
         yield return new WaitForSeconds(1.0f);
 
 
-        ChangeScene();
+        if (_networkRunner != null && _networkRunner.IsSceneAuthority)
+        {
+            ChangeScene();
+        }
     }
     private void DespawnPlayer()
     {
@@ -91,7 +96,6 @@ public class Door : NetworkBehaviour, IActivable
     }
     private void ChangeScene()
     {
-        if(!HasStateAuthority) return;
         var runnerHandler = FindObjectOfType<NetworkRunnerHandler>();
         runnerHandler.ChangeScene(sceneName);
         

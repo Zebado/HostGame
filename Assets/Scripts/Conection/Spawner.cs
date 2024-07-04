@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] NetworkPrefabRef _playerPrefab1,_playerPrefab2;
     [SerializeField] private int cantOfPlayers;
     private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
-
+   
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
@@ -31,19 +31,18 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         //aca mandamos la "caja" con los inputs a travez de la red hacia el host.
         input.Set(_characterInputHandler.GetLocalInputs());
     }
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) 
-    {
 
-    }
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
         cantOfPlayers--;
     }
+    
     
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) {}
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }

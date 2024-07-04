@@ -23,21 +23,23 @@ public class PlatformWithPolarity : NetworkBehaviour, IPolarity
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_SetSprite()
     {
-        if (isDisabled)
-        {
-            myRend.sprite = spriteDisabled;
-        }
-        else if (polarityPlus && !polarityMinus)
-        {
-            myRend.sprite = spritePlus;
-        }
-        else if (!polarityPlus && polarityMinus)
-        {
-            myRend.sprite = spriteMinus;
-        }
-        else
-        {
-            myRend.sprite = spriteDisabled;
+        if(myRend != null){
+            if (isDisabled)
+            {
+                myRend.sprite = spriteDisabled;
+            }
+            else if (polarityPlus && !polarityMinus)
+            {
+                myRend.sprite = spritePlus;
+            }
+            else if (!polarityPlus && polarityMinus)
+            {
+                myRend.sprite = spriteMinus;
+            }
+            else
+            {
+                myRend.sprite = spriteDisabled;
+            }
         }
     }
 

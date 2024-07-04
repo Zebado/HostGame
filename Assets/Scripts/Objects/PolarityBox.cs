@@ -5,17 +5,22 @@ using Fusion;
 
 public class PolarityBox : NetworkBehaviour, IPolarity {
     
-    [Networked] [SerializeField] public bool polarityPlus { get; set; }
-    [Networked] [SerializeField] public bool polarityMinus { get; set; }
-    [Networked] [SerializeField] public bool isDisabled { get; set; }
+    [Networked] [HideInInspector] public bool polarityPlus { get; set; }
+    [Networked] [HideInInspector] public bool polarityMinus { get; set; }
+    [Networked] [HideInInspector] public bool isDisabled { get; set; }
+
+    [SerializeField]private bool polarityPlusAux,polarityMinusAux, isDisabledAux;
     private Rigidbody2D myRb;
     [SerializeField] private Sprite spritePlus, spriteMinus, spriteDisabled;
     private SpriteRenderer myRend;
 
     [SerializeField] private float forceMagnitude;
-    private void Awake() {
+    public override void Spawned(){
         myRend = GetComponent<SpriteRenderer>();
         myRb = GetComponent<Rigidbody2D> ();
+        polarityPlus = polarityPlusAux;
+        polarityMinus = polarityMinusAux;
+        isDisabled = isDisabledAux;
     }
     public override void FixedUpdateNetwork() {
         RPC_SetSprite();
@@ -23,21 +28,23 @@ public class PolarityBox : NetworkBehaviour, IPolarity {
     [Rpc(RpcSources.All, RpcTargets.All)]
     private void RPC_SetSprite()
     {
-        if (isDisabled)
-        {
-            myRend.sprite = spriteDisabled;
-        }
-        else if (polarityPlus && !polarityMinus)
-        {
-            myRend.sprite = spritePlus;
-        }
-        else if (!polarityPlus && polarityMinus)
-        {
-            myRend.sprite = spriteMinus;
-        }
-        else
-        {
-            myRend.sprite = spriteDisabled;
+        if(myRend != null){
+            if (isDisabled)
+            {
+                myRend.sprite = spriteDisabled;
+            }
+            else if (polarityPlus && !polarityMinus)
+            {
+                myRend.sprite = spritePlus;
+            }
+            else if (!polarityPlus && polarityMinus)
+            {
+                myRend.sprite = spriteMinus;
+            }
+            else
+            {
+                myRend.sprite = spriteDisabled;
+            }
         }
     }
 

@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] NetworkRunner _runnerPrefab;
+    
+    private NetworkSceneManagerDefault _sceneManager;
 
     NetworkRunner _currentRunner;
 
@@ -20,6 +22,14 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+    }
+    private void Start() {
+        _sceneManager = gameObject.GetComponent<NetworkSceneManagerDefault>();
+        if (_sceneManager == null)
+        {
+            _sceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
+        }
+        
     }
     #region Join / Create Game
 
@@ -50,14 +60,29 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         else
         {
             Debug.Log("[Custom Msg] Game started");
+            //LoadAllScenes();
         }
     }
+    private void LoadAllScenes(){
+        if(_currentRunner.IsSceneAuthority){
+            int sceneCount = SceneManager.sceneCountInBuildSettings;
 
+            for (int i = 0; i < sceneCount; i++)
+            {
+                string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+                string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+                // LoadSceneAsync carga la escena en segundo plano de manera asíncrona
+                _currentRunner.LoadScene(sceneName, LoadSceneMode.Additive);
+            }
+            
+        }
+    }
     public void ChangeScene(string sceneName)
     {
         if(_currentRunner.IsSceneAuthority){
-            _currentRunner.LoadScene(sceneName, LoadSceneMode.Additive);
             string currentSceneName = SceneManager.GetActiveScene().name;
+            _currentRunner.LoadScene(sceneName, LoadSceneMode.Additive);
             _currentRunner.UnloadScene(currentSceneName);
             
         }
