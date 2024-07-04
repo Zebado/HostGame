@@ -76,7 +76,7 @@ public class Door : NetworkBehaviour, IActivable
     }
     private void DespawnPlayer()
     {
-        if (_networkRunner != null)
+        /*if (_networkRunner != null)
         {
             NetworkPlayer localPlayer = NetworkPlayer.Local;
             if (localPlayer != null)
@@ -87,11 +87,12 @@ public class Door : NetworkBehaviour, IActivable
                     _networkRunner.Despawn(localNetworkObject);
                 }
             }
-        }
+        }*/
     }
     private void ChangeScene()
     {
-        SceneManager.LoadScene("Level2");
+        var runnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+        runnerHandler.ChangeScene();
     }
 }
 

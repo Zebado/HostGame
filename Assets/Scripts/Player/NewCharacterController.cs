@@ -42,6 +42,7 @@ public class NewCharacterController : NetworkBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         

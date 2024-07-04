@@ -1,8 +1,12 @@
 using UnityEngine;
+using Fusion;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+
+public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
+    [SerializeField] NetworkRunnerHandler _networkHandler;
 
     public GameObject defeatMenu;
 
@@ -16,6 +20,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        _networkHandler = FindObjectOfType<NetworkRunnerHandler>();
     }
 
     public void ShowDefeatMenu()
@@ -30,12 +35,19 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f; // Reanuda el juego
     }
 
-    public void RestartGame()
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_RestartLevel()
     {
-        // Lógica para reiniciar el juego
-        // Por ejemplo, cargar la escena nuevamente
-        Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void RestartLevel()
+    {
+        if (HasInputAuthority)
+        {
+            RPC_RestartLevel();
+        }
     }
 
     public void QuitGame()

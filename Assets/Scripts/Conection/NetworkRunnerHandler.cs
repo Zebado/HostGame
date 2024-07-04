@@ -53,6 +53,16 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    public void ChangeScene()
+    {
+        if(_currentRunner.IsSceneAuthority){
+            _currentRunner.LoadScene(SceneRef.FromIndex(2), LoadSceneMode.Additive);
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            _currentRunner.UnloadScene(currentSceneName);
+            
+        }
+    }
+
     #endregion
 
     #region Lobby
