@@ -22,14 +22,14 @@ public class NewCharacterController : NetworkBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
-    private bool isGrounded;
+    [Networked] public bool isGrounded { get; set; }
 
     [Header("LineRenderer")]
     [SerializeField] private LineRenderer myRend;
     [SerializeField] private float maxDistance = 2f; // La distancia máxima que deseas permitir
     [SerializeField] private Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
     
-    RaycastHit2D hit;
+    public RaycastHit2D hit;
 
     [Header("Polarity")]
     private bool polarityPlus, polarityMinus, reduceforceMagnitude, canMove;
@@ -37,6 +37,7 @@ public class NewCharacterController : NetworkBehaviour
     private int negativeForceCount = 0;
     [SerializeField] private int MaxForceCount = 2;
     [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet;
+    private IPolarity polarityObject;
 
 
     private void Awake()
@@ -119,12 +120,12 @@ public class NewCharacterController : NetworkBehaviour
         {
             if (polarityPlus && negativeForceCount > 0)
             {
-                ApplyForce(hit.point, true);
+                polarityObject.ApplyPolarity(this, true);
                 StartCoroutine(ReduceForceCount(false, 0.2f));
             }
             else if (polarityMinus && negativeForceCount > 0)
             {
-                ApplyForce(hit.point, false);
+                polarityObject.ApplyPolarity(this, false);
                 StartCoroutine(ReduceForceCount(false, 0.2f));
             }
         }
@@ -133,12 +134,12 @@ public class NewCharacterController : NetworkBehaviour
         {
             if (polarityPlus && positiveForceCount > 0)
             {
-                ApplyForce(hit.point, false);
+                polarityObject.ApplyPolarity(this, false);
                 StartCoroutine(ReduceForceCount(true, 0.2f));
             }
             else if (polarityMinus && positiveForceCount > 0)
             {
-                ApplyForce(hit.point, true);
+                polarityObject.ApplyPolarity(this, true);
                 StartCoroutine(ReduceForceCount(true, 0.2f));
             }
         }
@@ -154,17 +155,13 @@ public class NewCharacterController : NetworkBehaviour
             negativeForceCount--;
     }
     IEnumerator EnableCanMove(){
-        //var auxGravity = rb.gravityScale;
-        //rb.gravityScale = 0;
         canMove = false;
         yield return new WaitForSeconds(0.15f);
         canMove = true;  
-        //rb.gravityScale = auxGravity;
     }
 
     public void ApplyForce(Vector3 targetPoint, bool attract)
     {
-              
         Vector3 forceDirection = (targetPoint - transform.position).normalized;
         StartCoroutine(EnableCanMove());
         if (!attract)
@@ -196,22 +193,22 @@ public class NewCharacterController : NetworkBehaviour
         
         if (hit.collider != null)
         {
-            PlatformWithPolarity platform = hit.collider.GetComponent<PlatformWithPolarity>();
-            if (platform != null)
+            polarityObject = hit.collider.GetComponent<IPolarity>();
+            if (polarityObject != null)
             {
-                if (platform.isDisabled)
+                if (polarityObject.isDisabled)
                 {
                     myRend.colorGradient = defaultColor;
                     polarityPlus = false;
                     polarityMinus = false;
                 }
-                else if (platform.polarityPlus && !platform.polarityMinus)
+                else if (polarityObject.polarityPlus && !polarityObject.polarityMinus)
                 {
                     myRend.colorGradient = polarityPlusColor;
                     polarityPlus = true;
                     polarityMinus = false;
                 }
-                else if (!platform.polarityPlus && platform.polarityMinus)
+                else if (!polarityObject.polarityPlus && polarityObject.polarityMinus)
                 {
                     myRend.colorGradient = polarityNegativeColor;
                     polarityPlus = false;
@@ -266,7 +263,7 @@ public class NewCharacterController : NetworkBehaviour
     }
     private void OnCollisionStay2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
-            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.35f){
+            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.4f){
                 isGrounded = true;
                 OnFall(!isGrounded);
             }
@@ -274,7 +271,8 @@ public class NewCharacterController : NetworkBehaviour
     }
     private void OnCollisionExit2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
-            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.35f){
+            Debug.Log("Player");
+            if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.4f){
                 isGrounded = false;
                 OnFall(!isGrounded);
             }

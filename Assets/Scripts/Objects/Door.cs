@@ -10,6 +10,8 @@ public class Door : NetworkBehaviour, IActivable
     private NetworkMecanimAnimator _mecanim;
     private NetworkRunner _networkRunner;
     private int playerCount = 0;
+    private int cantOfActives = 0;
+    [SerializeField] private int cantToActive = 1;
 
     [SerializeField] private Sprite enabledDoor, activeDoor;
     private SpriteRenderer myRend;
@@ -22,8 +24,11 @@ public class Door : NetworkBehaviour, IActivable
     }
     public void ChangeToActive()
     {
-        RPC_ChangeToEnable();
-        GetComponent<BoxCollider2D>().enabled = true;
+        cantOfActives++;
+        if(cantOfActives >= cantToActive){
+            RPC_ChangeToEnable();
+            GetComponent<BoxCollider2D>().enabled = true;
+        }
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")){

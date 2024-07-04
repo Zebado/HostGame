@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public class PlatformWithPolarity : NetworkBehaviour, IPolarity
-{
+public class PolarityBox : NetworkBehaviour, IPolarity {
+    
     [Networked] [SerializeField] public bool polarityPlus { get; set; }
     [Networked] [SerializeField] public bool polarityMinus { get; set; }
     [Networked] [SerializeField] public bool isDisabled { get; set; }
-
+    private Rigidbody2D myRb;
     [SerializeField] private Sprite spritePlus, spriteMinus, spriteDisabled;
     private SpriteRenderer myRend;
 
-    public override void Spawned()
-    {
+    [SerializeField] private float forceMagnitude;
+    private void Awake() {
         myRend = GetComponent<SpriteRenderer>();
+        myRb = GetComponent<Rigidbody2D> ();
     }
-
     public override void FixedUpdateNetwork() {
         RPC_SetSprite();
     }
@@ -41,41 +41,22 @@ public class PlatformWithPolarity : NetworkBehaviour, IPolarity
         }
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_ChangePolarity()
-    {
-        polarityPlus = !polarityPlus;
-        polarityMinus = !polarityMinus;
-        RPC_SetSprite();
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_Disable()
-    {
-        isDisabled = true;
-        polarityPlus = false;
-        polarityMinus = false;
-        RPC_SetSprite();
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_EnablePlus()
-    {
-        isDisabled = false;
-        polarityPlus = true;
-        polarityMinus = false;
-        RPC_SetSprite();
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_EnableMinus()
-    {
-        isDisabled = false;
-        polarityPlus = false;
-        polarityMinus = true;
-        RPC_SetSprite();
-    }
     public void ApplyPolarity(NewCharacterController player, bool attract){
-        player.ApplyForce(player.hit.point, attract);
+        Vector3 forceDirection = (player.transform.position - transform.position).normalized;
+        if (!attract)
+        {
+            forceDirection = -forceDirection;
+            myRb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
+        }
+        else{
+            myRb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
+        }
+        StartCoroutine(RestartPolarity());
+    }
+
+    private IEnumerator RestartPolarity(){
+        isDisabled = true;
+        yield return new WaitForSeconds(1);
+        isDisabled = false;
     }
 }
