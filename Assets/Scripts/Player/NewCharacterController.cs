@@ -123,6 +123,7 @@ public class NewCharacterController : NetworkBehaviour
     {
         yield return new WaitForSeconds(time);
         isWaitingForSpawn = false;
+        isDead = false;
     }
 
     private void Jump()
