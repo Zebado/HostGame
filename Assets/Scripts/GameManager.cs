@@ -7,6 +7,8 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
     [SerializeField] NetworkRunnerHandler _networkHandler;
+    [SerializeField] NetworkRunner _runnerPrefab;
+
 
     public GameObject defeatMenu;
 
@@ -21,6 +23,7 @@ public class GameManager : NetworkBehaviour
             Destroy(gameObject);
         }
         _networkHandler = FindObjectOfType<NetworkRunnerHandler>();
+        _runnerPrefab = FindAnyObjectByType<NetworkRunner>();
     }
 
     public void ShowDefeatMenu()
@@ -38,13 +41,13 @@ public class GameManager : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_RestartLevel()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+        SpawnManager.Instance.StartNewLevel();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void RestartLevel()
     {
-        if (HasInputAuthority)
+        if (_runnerPrefab != null && _runnerPrefab.IsSceneAuthority)
         {
             RPC_RestartLevel();
         }

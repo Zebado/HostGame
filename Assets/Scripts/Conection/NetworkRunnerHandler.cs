@@ -29,7 +29,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
         {
             _sceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
         }
-        
     }
     #region Join / Create Game
 

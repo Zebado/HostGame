@@ -56,7 +56,6 @@ public class NewCharacterController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData inputData)) return;
-        if(isDead)return;
         if (isWaitingForSpawn)
         {
             if (isPlayer1)
@@ -71,6 +70,7 @@ public class NewCharacterController : NetworkBehaviour
             }
             return;
         }
+        if(isDead)return;
         if(canMove){
             Vector2 moveDirection = Vector2.right * inputData.movementInput;
             Move(moveDirection);
@@ -121,6 +121,7 @@ public class NewCharacterController : NetworkBehaviour
     }
     IEnumerator WaitForPlayerInSpawn(float time)
     {
+        isDead = false;
         yield return new WaitForSeconds(time);
         isWaitingForSpawn = false;
     }

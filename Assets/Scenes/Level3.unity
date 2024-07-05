@@ -740,9 +740,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f65a9080e49fe41a720be725ed8689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 2040648281}
-  - {fileID: 1856116394}
+  spawnPointsforPlayer1: []
+  spawnPointsforPlayer2: []
 --- !u!4 &823103169
 Transform:
   m_ObjectHideFlags: 0
@@ -775,6 +774,10 @@ PrefabInstance:
     - target: {fileID: 7943937242409583503, guid: 3961e33ae35df4748bac001e948c5f95, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5617939687714669428, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -3614149609633227655, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
       propertyPath: m_Name
@@ -891,8 +894,49 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1335777868347661017, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 896260753}
+    - targetCorrespondingSourceObject: {fileID: 1335777868347661017, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 896260752}
   m_SourcePrefab: {fileID: -2695619058785784247, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+--- !u!1 &896260751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1335777868347661017, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+  m_PrefabInstance: {fileID: 896260750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &896260752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896260751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3279070052
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 896260753}
+--- !u!114 &896260753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896260751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a10655efe6bfc246824aa618510195d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1127736131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1317,7 +1361,7 @@ MonoBehaviour:
   cantToActive: 2
   enabledDoor: {fileID: -1180082013, guid: f086f0f9a0026ae4f972d789f58f8f49, type: 3}
   activeDoor: {fileID: 1478046943, guid: 2ae64402ac5bd9c429219df504800638, type: 3}
-  sceneName: 
+  sceneName: Level4
 --- !u!95 &1338562831
 Animator:
   serializedVersion: 5
