@@ -267,6 +267,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  isPlayer1: 1
+  _isGrounded: 0
   myRend: {fileID: 0}
   maxDistance: 3
   defaultColor:

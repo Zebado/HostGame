@@ -18,6 +18,8 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private float forceMagnitude = 10f;
     [SerializeField] private LayerMask groundLayer;
     private bool isDead = false;
+    private bool isWaitingForSpawn = false;
+    [SerializeField] private bool isPlayer1;
     [SerializeField] private List<IActivable> activablesInRange = new List<IActivable>();
 
     private Rigidbody2D rb;
@@ -55,7 +57,20 @@ public class NewCharacterController : NetworkBehaviour
     {
         if (!GetInput(out NetworkInputData inputData)) return;
         if(isDead)return;
-
+        if (isWaitingForSpawn)
+        {
+            if (isPlayer1)
+            {
+                var spawnPoint = SpawnManager.Instance.GetSpawnPoint1();
+                transform.position = spawnPoint.position;
+            }
+            else
+            {
+                var spawnPoint = SpawnManager.Instance.GetSpawnPoint2();
+                transform.position = spawnPoint.position;
+            }
+            return;
+        }
         if(canMove){
             Vector2 moveDirection = Vector2.right * inputData.movementInput;
             Move(moveDirection);
@@ -97,6 +112,17 @@ public class NewCharacterController : NetworkBehaviour
         {
             spriteRenderer.flipX = false;
         }
+    }
+    public void SetNewLevelSpawn()
+    {
+        isWaitingForSpawn = true;
+        Debug.Log("entro");
+        StartCoroutine(WaitForPlayerInSpawn(2f));
+    }
+    IEnumerator WaitForPlayerInSpawn(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isWaitingForSpawn = false;
     }
 
     private void Jump()
