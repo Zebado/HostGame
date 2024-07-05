@@ -36,6 +36,34 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         cantOfPlayers--;
     }
     
+    public void OnSceneLoadDone(NetworkRunner runner) {
+        cantOfPlayers = 0;
+        foreach (var player in playerObjects.Keys)
+        {
+            if (runner.IsServer)
+            {
+                Transform spawnPoint = cantOfPlayers % 2 == 0 ? SpawnManager.Instance.GetSpawnPoint2() : SpawnManager.Instance.GetSpawnPoint1();
+                NetworkObject playerObject = playerObjects[player];
+                playerObject.transform.position = spawnPoint.position;
+                playerObject.transform.rotation = spawnPoint.rotation;
+                cantOfPlayers ++;
+            }
+        }
+    }
+    public void RestartLevel()
+    {
+        cantOfPlayers = 0;
+        foreach (var player in playerObjects.Keys)
+        {
+            Transform spawnPoint = cantOfPlayers % 2 == 0 ? SpawnManager.Instance.GetSpawnPoint2() : SpawnManager.Instance.GetSpawnPoint1();
+            NetworkObject playerObject = playerObjects[player];
+            var playerController = playerObject.GetComponent<NewCharacterController>();
+            playerController.isDead = false;
+            playerController.transform.position = spawnPoint.position;
+            playerController.transform.rotation = spawnPoint.rotation;
+            cantOfPlayers++;
+        }
+    }
     
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }
@@ -49,18 +77,6 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
-    public void OnSceneLoadDone(NetworkRunner runner) {
-        foreach (var player in playerObjects.Keys)
-        {
-            if (runner.IsServer)
-            {
-                Transform spawnPoint = cantOfPlayers % 2 == 0 ? SpawnManager.Instance.GetSpawnPoint2() : SpawnManager.Instance.GetSpawnPoint1();
-                NetworkObject playerObject = playerObjects[player];
-                playerObject.transform.position = spawnPoint.position;
-                playerObject.transform.rotation = spawnPoint.rotation;
-            }
-        }
-    }
     public void OnSceneLoadStart(NetworkRunner runner) { }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }

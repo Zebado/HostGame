@@ -38,16 +38,13 @@ public class GameManager : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_RestartLevel()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+        var spawner = FindObjectOfType<Spawner>();
+        spawner.RestartLevel();
     }
 
     public void RestartLevel()
     {
-        if (HasInputAuthority)
-        {
-            RPC_RestartLevel();
-        }
+        RPC_RestartLevel();
     }
 
     public void QuitGame()

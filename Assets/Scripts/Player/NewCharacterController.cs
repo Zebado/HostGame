@@ -17,7 +17,7 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private float jumpImpulse = 10f;
     [SerializeField] private float forceMagnitude = 10f;
     [SerializeField] private LayerMask groundLayer;
-    private bool isDead = false;
+    [HideInInspector]public bool isDead = false;
     [SerializeField] private List<IActivable> activablesInRange = new List<IActivable>();
 
     private Rigidbody2D rb;
