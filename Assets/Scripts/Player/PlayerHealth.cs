@@ -15,6 +15,4 @@ public class PlayerHealth : NetworkBehaviour
     public void Death(){
         OnDead?.Invoke();
     }
-
-    
 }
