@@ -49,6 +49,17 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
             controller.SetNewLevelSpawn();
         }
     }
+    internal void RestartLevel()
+    {
+        foreach (var player in playerObjects.Keys)
+        {
+
+            NetworkObject playerObject = playerObjects[player];
+            var playerController = playerObject.GetComponent<NewCharacterController>();
+            playerController.SetNewLevelSpawn();
+        }
+    }
+
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
@@ -65,5 +76,6 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+
     #endregion
 }
