@@ -1062,6 +1062,10 @@ PrefabInstance:
       propertyPath: _polarityMinus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1227019898352061963, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
+      propertyPath: polarityPlusAux
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2235627408203767689, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.625
@@ -2856,7 +2860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.900001
+      value: -8.9775
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.y
