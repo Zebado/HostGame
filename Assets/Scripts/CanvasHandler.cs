@@ -18,4 +18,9 @@ public class CanvasHandler : MonoBehaviour
     {
         _menuDefeat.SetActive(true);
     }
+
+    private void OnDisable()
+    {
+        _playerHealth.OnDead -= ActiveLoseMenu;
+    }
 }
