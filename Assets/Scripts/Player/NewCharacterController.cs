@@ -117,7 +117,7 @@ public class NewCharacterController : NetworkBehaviour
     {
         isWaitingForSpawn = true;
         Debug.Log("entro");
-        StartCoroutine(WaitForPlayerInSpawn(2f));
+        StartCoroutine(WaitForPlayerInSpawn(0.1f));
     }
     IEnumerator WaitForPlayerInSpawn(float time)
     {

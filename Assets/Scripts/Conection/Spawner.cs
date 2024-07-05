@@ -41,18 +41,13 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     
     public void OnSceneLoadDone(NetworkRunner runner) {
         Debug.Log("Dictionary");
-        foreach (var player in playerObjects.Values)
+        foreach (var player in playerObjects.Keys)
         {
             Debug.Log("Este es el diccionario del spawner" + player);
-            StartCoroutine(Esperar(runner,player));
+            NetworkObject playerObject = playerObjects[player];
+            var controller = playerObject.GetComponent<NewCharacterController>();
+            controller.SetNewLevelSpawn();
         }
-    }
-    IEnumerator Esperar(NetworkRunner runner, NetworkObject player)
-    {
-        yield return new WaitForSeconds(5);
-        var controller = player.GetComponent<NewCharacterController>();
-        controller.SetNewLevelSpawn();
-
     }
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }

@@ -77,6 +77,7 @@ public class Door : NetworkBehaviour, IActivable
         if (_networkRunner != null && _networkRunner.IsSceneAuthority)
         {
             ChangeScene();
+            SpawnManager.Instance.StartNewLevel();
         }
     }
     private void DespawnPlayer()
