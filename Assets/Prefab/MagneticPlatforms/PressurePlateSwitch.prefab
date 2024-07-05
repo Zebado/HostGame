@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 975603243
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 265682484, guid: be5f9bb8bca55f940b9324cede4b0284, type: 3}
   m_Color: {r: 1, g: 0, b: 0.95808125, a: 1}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 7208367182948572960}
   - component: {fileID: 5617332225441350586}
   - component: {fileID: 319775855427997507}
-  - component: {fileID: 6140797294847210260}
+  - component: {fileID: 6631370448787900040}
   m_Layer: 0
   m_Name: PressurePlateSwitch
   m_TagString: Untagged
@@ -153,7 +153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7448785797323712659}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.05998185, z: 1}
   m_ConstrainProportionsScale: 0
@@ -200,7 +200,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 975603243
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
@@ -227,6 +227,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformToActivate:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   type: 0
   isSwitch: 0
 --- !u!114 &319775855427997507
@@ -248,8 +259,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 5617332225441350586}
   - {fileID: 2422537643537620641}
---- !u!61 &6140797294847210260
-BoxCollider2D:
+--- !u!60 &6631370448787900040
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -277,10 +288,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.0428641}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -290,6 +301,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.7175828, y: 3.0857282}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.32121605, y: 1.8956202}
+      - {x: -0.3165614, y: 1.8920766}
+      - {x: -0.45594117, y: 0.42654684}
+      - {x: -0.5, y: -0.5}
+      - {x: 0.5, y: -0.5}
+      - {x: 0.4515353, y: 0.5}
+  m_UseDelaunayMesh: 0
