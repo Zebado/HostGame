@@ -48,7 +48,7 @@ public class CanvasHandler : MonoBehaviour
     private void OnEnable()
     {
         _playerHealth = GetComponent<PlayerHealth>();
-        if (_playerHealth == null)
+        if (_playerHealth != null)
             _playerHealth.OnDead += ActiveLoseMenu;
     }
     private void OnDisable()
