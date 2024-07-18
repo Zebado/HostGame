@@ -30,6 +30,8 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private LineRenderer myRend;
     [SerializeField] private float maxDistance = 2f; // La distancia máxima que deseas permitir
     [SerializeField] private Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
+    [SerializeField] private ParticleSystem particle;
+    private Quaternion rotation;
     
     public RaycastHit2D hit;
 
@@ -190,6 +192,7 @@ public class NewCharacterController : NetworkBehaviour
 
     public void ApplyForce(Vector3 targetPoint, bool attract)
     {
+        particle.Play();
         Vector3 forceDirection = (targetPoint - transform.position).normalized;
         StartCoroutine(EnableCanMove());
         if (!attract)
@@ -210,7 +213,10 @@ public class NewCharacterController : NetworkBehaviour
     private void SetLineRenderer(Vector3 mousePosition)
     {
 
-        Vector3 direction = mousePosition  - transform.position;
+        Vector3 direction = mousePosition - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rotation.eulerAngles = new Vector3(-angle,90,0);
+        particle.gameObject.transform.rotation = rotation;
         float distance = direction.magnitude;
 
         distance = Mathf.Clamp(distance,maxDistance, maxDistance);

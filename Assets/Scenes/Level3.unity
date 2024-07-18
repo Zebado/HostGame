@@ -444,6 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _networkHandler: {fileID: 0}
+  _runnerPrefab: {fileID: 0}
   defeatMenu: {fileID: 8731716199508819951}
 --- !u!4 &516878604
 Transform:
@@ -767,18 +768,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -8466525632523603212, guid: 3961e33ae35df4748bac001e948c5f95, type: 3}
-      propertyPath: m_Layer
-      value: 6
+    - target: {fileID: -5959810108592676699, guid: 998814ef3e420d04db60a4a57a1700da, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7943937242409583503, guid: 3961e33ae35df4748bac001e948c5f95, type: 3}
-      propertyPath: m_Layer
-      value: 6
+    - target: {fileID: 471510883068841655, guid: 998814ef3e420d04db60a4a57a1700da, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -5617939687714669428, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5275816845427412444, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5275816845427412444, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5275816845427412444, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4412979355198788813, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: -3614149609633227655, guid: 5170b512c8fa9ad4faf2a08c0c4d1b14, type: 3}
       propertyPath: m_Name
       value: Level 2
@@ -883,13 +900,13 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: -5959810108592676699, guid: 998814ef3e420d04db60a4a57a1700da, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
+    - target: {fileID: -8466525632523603212, guid: 3961e33ae35df4748bac001e948c5f95, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 471510883068841655, guid: 998814ef3e420d04db60a4a57a1700da, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
+    - target: {fileID: 7943937242409583503, guid: 3961e33ae35df4748bac001e948c5f95, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
