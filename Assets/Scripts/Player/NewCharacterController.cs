@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 using System;
+using Fusion.Addons.Physics;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 public class NewCharacterController : NetworkBehaviour
@@ -23,6 +25,7 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private List<IActivable> activablesInRange = new List<IActivable>();
 
     private Rigidbody2D rb;
+    private NetworkRigidbody2D netRb;
     private SpriteRenderer spriteRenderer;
     [Networked] public bool isGrounded { get; set; }
 
@@ -48,6 +51,7 @@ public class NewCharacterController : NetworkBehaviour
     {
         DontDestroyOnLoad(gameObject);
         rb = GetComponent<Rigidbody2D>();
+        netRb = GetComponent<NetworkRigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
         canMove = true;
@@ -55,9 +59,15 @@ public class NewCharacterController : NetworkBehaviour
         myRend = GetComponent<LineRenderer>();
         myRend.enabled = !HasInputAuthority;
     }
+    private void Update()
+    {
+        netRb.InterpolationTarget = transform;
+
+    }
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData inputData)) return;
+        netRb.InterpolationTarget = transform;
         if (isWaitingForSpawn)
         {
             if (isPlayer1)

@@ -74,7 +74,7 @@ public class Door : NetworkBehaviour, IActivable
         yield return new WaitForSeconds(1.0f);
 
 
-        if (_networkRunner != null && _networkRunner.IsSceneAuthority)
+        if (Runner != null && Runner.IsSceneAuthority)
         {
             ChangeScene();
             SpawnManager.Instance.StartNewLevel();
@@ -97,8 +97,8 @@ public class Door : NetworkBehaviour, IActivable
     }
     private void ChangeScene()
     {
-        var runnerHandler = FindObjectOfType<NetworkRunnerHandler>();
-        runnerHandler.ChangeScene(sceneName);
+        //var runnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+        Runner.LoadScene(sceneName);
         
     }
 }
