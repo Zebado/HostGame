@@ -1063,6 +1063,10 @@ PrefabInstance:
       propertyPath: _polarityMinus
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1227019898352061963, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
+      propertyPath: polarityPlusAux
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2235627408203767689, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.625
@@ -3066,11 +3070,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.900001
+      value: -9.7825
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 6.195
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4258,7 +4262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3406782255488917772, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: sceneName
-      value: Level2
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 3951915696923081381, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_Name

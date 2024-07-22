@@ -979,6 +979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _networkHandler: {fileID: 0}
+  _runnerPrefab: {fileID: 0}
   defeatMenu: {fileID: 0}
 --- !u!4 &809279396
 Transform:
@@ -1618,7 +1619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3406782255488917772, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: sceneName
-      value: Level3
+      value: Level4
       objectReference: {fileID: 0}
     - target: {fileID: 3951915696923081381, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_Name
@@ -1834,11 +1835,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2235627408203767689, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.955
+      value: 1.6624999
       objectReference: {fileID: 0}
     - target: {fileID: 2235627408203767689, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.54
+      value: -2.135
       objectReference: {fileID: 0}
     - target: {fileID: 2235627408203767689, guid: 7ac57db1296ba704eb5453ca2b548ade, type: 3}
       propertyPath: m_LocalPosition.z
