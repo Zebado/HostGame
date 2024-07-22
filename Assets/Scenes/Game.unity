@@ -1437,13 +1437,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPointsforPlayer1:
   - {fileID: 2040648281}
-  - {fileID: 1922769404}
   - {fileID: 1810866414}
+  - {fileID: 1922769404}
   - {fileID: 1105301759}
   spawnPointsforPlayer2:
   - {fileID: 1856116394}
-  - {fileID: 1497884281}
   - {fileID: 1755299455}
+  - {fileID: 1497884281}
   - {fileID: 1995681415}
 --- !u!4 &823103169
 Transform:
@@ -3673,7 +3673,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1488874268}
         m_TargetAssemblyTypeName: CanvasHandler, Assembly-CSharp
-        m_MethodName: RestartPlayers
+        m_MethodName: RestartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

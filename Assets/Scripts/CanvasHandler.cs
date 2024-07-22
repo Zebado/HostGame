@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Fusion;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CanvasHandler : MonoBehaviour
 {
@@ -28,23 +28,12 @@ public class CanvasHandler : MonoBehaviour
         _playerHealth = FindAnyObjectByType<PlayerHealth>();
         _networkRunner = FindAnyObjectByType<NetworkRunner>();
     }
-    public void RestartPlayers()
+    public void RestartLevel()
     {
-        if (_networkRunner.IsServer)
-            RPC_RestartPlayersPoint();
+            GameManager.Instance.RestartLevel();
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RPC_RestartPlayersPoint()
-    {
-        var spawner = FindObjectOfType<Spawner>();
-        if (spawner != null)
-            spawner.RestartLevel();
-        foreach (var player in _controllers)
-        {
-            player.SetNewLevelSpawn();
-        }
-    }
+
     private void OnEnable()
     {
         _playerHealth = GetComponent<PlayerHealth>();

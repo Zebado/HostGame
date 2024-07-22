@@ -49,16 +49,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
             controller.SetNewLevelSpawn();
         }
     }
-    internal void RestartLevel()
-    {
-        foreach (var player in playerObjects.Keys)
-        {
 
-            NetworkObject playerObject = playerObjects[player];
-            var playerController = playerObject.GetComponent<NewCharacterController>();
-            playerController.SetNewLevelSpawn();
-        }
-    }
 
     #region Unused Callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }

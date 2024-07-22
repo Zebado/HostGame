@@ -38,19 +38,18 @@ public class GameManager : NetworkBehaviour
         Time.timeScale = 1f; // Reanuda el juego
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_RestartLevel()
     {
-        SpawnManager.Instance.StartNewLevel();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (Runner != null && Runner.IsSceneAuthority)
+        {
+            Runner.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void RestartLevel()
     {
-        if (_runnerPrefab != null && _runnerPrefab.IsSceneAuthority)
-        {
-            RPC_RestartLevel();
-        }
+        RPC_RestartLevel();
     }
 
     public void QuitGame()
