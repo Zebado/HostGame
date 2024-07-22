@@ -18,7 +18,7 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpImpulse = 10f;
     [SerializeField] private float forceMagnitude = 10f;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask groundLayer, playerLayer;
     private bool isDead = false;
     private bool isWaitingForSpawn = false;
     [SerializeField] private bool isPlayer1;
@@ -149,8 +149,8 @@ public class NewCharacterController : NetworkBehaviour
 
     private void CheckGroundStatus()
     {
-        Vector2 originPosition = transform.position - new Vector3(0,0.3f,0);
-        isGrounded = Physics2D.OverlapCircle(originPosition, 0.27f, groundLayer);
+        Vector2 originPosition = transform.position - new Vector3(0, 0.3f, 0);
+        isGrounded = Physics2D.OverlapCircle(originPosition, 0.27f, groundLayer) || Physics2D.OverlapCircle(originPosition, 0.27f, playerLayer);
         OnFall(!isGrounded);
     }
 
@@ -305,7 +305,7 @@ public class NewCharacterController : NetworkBehaviour
             activablesInRange.Remove(activable);
         }
     }
-    private void OnCollisionStay2D(Collision2D other) {
+    /*private void OnCollisionStay2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")){
             if(Vector3.Distance(other.transform.position, transform.position - new Vector3(0,0.3f,0)) < 0.4f){
                 isGrounded = true;
@@ -321,7 +321,7 @@ public class NewCharacterController : NetworkBehaviour
                 OnFall(!isGrounded);
             }
         }
-    }
+    }*/
     public void ActivateObjects(List<IActivable> activablesInRange){
         // Usar una lista temporal para evitar la modificación de la colección durante la enumeración
         List<IActivable> tempActivables = new List<IActivable>(activablesInRange);
