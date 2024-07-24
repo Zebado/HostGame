@@ -43,7 +43,7 @@ public class GameManager : NetworkBehaviour
     {
         if (Runner != null && Runner.IsSceneAuthority)
         {
-            Runner.LoadScene(SceneManager.GetActiveScene().name);
+            Runner.LoadScene("Main Menu");
         }
     }
 
