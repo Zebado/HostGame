@@ -20,7 +20,7 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private float forceMagnitude = 10f;
     [SerializeField] private LayerMask groundLayer, playerLayer;
     private bool isDead = false;
-    [SerializeField]private bool isWaitingForSpawn = false;
+    [SerializeField] private bool isWaitingForSpawn = false;
     [SerializeField] private bool isPlayer1;
     [SerializeField] private List<IActivable> activablesInRange = new List<IActivable>();
 
@@ -35,7 +35,7 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private Gradient defaultColor, polarityPlusColor, polarityNegativeColor;
     [SerializeField] private ParticleSystem particle;
     private Quaternion rotation;
-    
+
     public RaycastHit2D hit;
 
     [Header("Polarity")]
@@ -46,6 +46,8 @@ public class NewCharacterController : NetworkBehaviour
     [SerializeField] private bool hasPositiveMagnet, hasNegativeMagnet;
     private IPolarity polarityObject;
 
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _runClip;
 
     private void Awake()
     {
@@ -53,11 +55,13 @@ public class NewCharacterController : NetworkBehaviour
         rb = GetComponent<Rigidbody2D>();
         netRb = GetComponent<NetworkRigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        
+
         canMove = true;
         reduceforceMagnitude = false;
         myRend = GetComponent<LineRenderer>();
         myRend.enabled = !HasInputAuthority;
+
+        _audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -82,8 +86,9 @@ public class NewCharacterController : NetworkBehaviour
             }
             return;
         }
-        if(isDead)return;
-        if(canMove){
+        if (isDead) return;
+        if (canMove)
+        {
             Vector2 moveDirection = Vector2.right * inputData.movementInput;
             Move(moveDirection);
         }
@@ -124,7 +129,31 @@ public class NewCharacterController : NetworkBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        RunClipSound(move);
+
     }
+
+    private void RunClipSound(Vector2 move)
+    {
+        if (isGrounded && MathF.Abs(move.x) > 0.1f)
+        {
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+                _audioSource.clip = _runClip;
+                _audioSource.loop = true;
+            }
+        }
+        else
+        {
+            if (_audioSource.isPlaying)
+            {
+                _audioSource.Stop();
+            }
+        }
+    }
+
     public void SetNewLevelSpawn()
     {
         isWaitingForSpawn = true;
@@ -185,19 +214,21 @@ public class NewCharacterController : NetworkBehaviour
         }
     }
 
-    IEnumerator ReduceForceCount(bool forceCounter, float time){
+    IEnumerator ReduceForceCount(bool forceCounter, float time)
+    {
         reduceforceMagnitude = true;
         yield return new WaitForSeconds(time);
         reduceforceMagnitude = false;
-        if(forceCounter)
+        if (forceCounter)
             positiveForceCount--;
         else
             negativeForceCount--;
     }
-    IEnumerator EnableCanMove(){
+    IEnumerator EnableCanMove()
+    {
         canMove = false;
         yield return new WaitForSeconds(0.15f);
-        canMove = true;  
+        canMove = true;
     }
 
     public void ApplyForce(Vector3 targetPoint, bool attract)
@@ -208,12 +239,13 @@ public class NewCharacterController : NetworkBehaviour
         if (!attract)
         {
             forceDirection = -forceDirection;
-            if(reduceforceMagnitude)
+            if (reduceforceMagnitude)
                 rb.AddForce(forceDirection * (forceMagnitude * 0.8f), ForceMode2D.Impulse);
             else
                 rb.AddForce(forceDirection * forceMagnitude, ForceMode2D.Impulse);
         }
-        else{
+        else
+        {
             //rb.velocity = Vector2.zero;
             rb.AddForce(forceDirection * (forceMagnitude * 1.5f), ForceMode2D.Impulse);
         }
@@ -225,16 +257,16 @@ public class NewCharacterController : NetworkBehaviour
 
         Vector3 direction = mousePosition - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rotation.eulerAngles = new Vector3(-angle,90,0);
+        rotation.eulerAngles = new Vector3(-angle, 90, 0);
         particle.gameObject.transform.rotation = rotation;
         float distance = direction.magnitude;
 
-        distance = Mathf.Clamp(distance,maxDistance, maxDistance);
+        distance = Mathf.Clamp(distance, maxDistance, maxDistance);
 
         Vector3 clampedPosition = transform.position + direction.normalized * distance;
 
         hit = Physics2D.Raycast(transform.position, direction.normalized, distance, groundLayer); // Ensure the raycast checks the correct layer
-        
+
         if (hit.collider != null)
         {
             polarityObject = hit.collider.GetComponent<IPolarity>();
@@ -283,7 +315,8 @@ public class NewCharacterController : NetworkBehaviour
         myRend.SetPosition(1, clampedPosition);
     }
 
-    public void Death(){
+    public void Death()
+    {
         isDead = true;
         Move(Vector2.zero);
         OnDead?.Invoke();
@@ -306,7 +339,8 @@ public class NewCharacterController : NetworkBehaviour
         }
     }
 
-    public void ActivateObjects(List<IActivable> activablesInRange){
+    public void ActivateObjects(List<IActivable> activablesInRange)
+    {
         // Usar una lista temporal para evitar la modificación de la colección durante la enumeración
         List<IActivable> tempActivables = new List<IActivable>(activablesInRange);
         foreach (var activable in tempActivables)
