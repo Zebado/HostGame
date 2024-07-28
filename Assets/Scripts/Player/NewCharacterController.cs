@@ -48,6 +48,7 @@ public class NewCharacterController : NetworkBehaviour
 
     AudioSource _audioSource;
     [SerializeField] AudioClip _runClip;
+    [Networked] bool _isMoving { get; set; }
 
     private void Awake()
     {
@@ -120,7 +121,6 @@ public class NewCharacterController : NetworkBehaviour
         rb.velocity = new Vector2(move.x, rb.velocity.y);
         OnMovement(move.magnitude);
 
-        // Invertir el sprite si se mueve hacia la izquierda
         if (direction.x < 0)
         {
             spriteRenderer.flipX = true;
@@ -129,27 +129,45 @@ public class NewCharacterController : NetworkBehaviour
         {
             spriteRenderer.flipX = false;
         }
-
+        _isMoving = direction.magnitude > 0;
         RunClipSound(move);
 
     }
 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RpcPlayRunSound()
+    {
+        if (!_audioSource.isPlaying)
+        {
+            _audioSource.clip = _runClip;
+            _audioSource.loop = true;
+            _audioSource.Play();
+        }
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RpcStopRunSound()
+    {
+        if (_audioSource.isPlaying)
+        {
+            _audioSource.Stop();
+        }
+    }
     private void RunClipSound(Vector2 move)
     {
         if (isGrounded && MathF.Abs(move.x) > 0.1f)
         {
             if (!_audioSource.isPlaying)
             {
-                _audioSource.Play();
-                _audioSource.clip = _runClip;
-                _audioSource.loop = true;
+                if (Object.HasStateAuthority)
+                    RpcPlayRunSound();
             }
         }
         else
         {
             if (_audioSource.isPlaying)
             {
-                _audioSource.Stop();
+                if (Object.HasStateAuthority)
+                    RpcStopRunSound();
             }
         }
     }

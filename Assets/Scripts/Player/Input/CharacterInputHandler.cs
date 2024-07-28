@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class CharacterInputHandler : MonoBehaviour
+public class CharacterInputHandler : NetworkBehaviour
 {
     private NetworkInputData _inputData;
 
@@ -10,15 +11,19 @@ public class CharacterInputHandler : MonoBehaviour
     private bool _isPositivePolarity;
     private Camera cam;
 
+    AudioSource _audioSource;
+    public AudioClip magneticClip;
     void Start()
     {
         _inputData = new NetworkInputData();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         _inputData.movementInput = Input.GetAxisRaw("Horizontal");
-        if(cam != null){
+        if (cam != null)
+        {
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
             _inputData.mouseInput = mousePosition;
@@ -31,13 +36,18 @@ public class CharacterInputHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _isNegativePolarity = true;
+            if (Object.HasStateAuthority)
+                RpcPlayMagneticSound();
         }
         if (Input.GetMouseButtonDown(1))
         {
             _isPositivePolarity = true;
+            if (Object.HasStateAuthority)
+                RpcPlayMagneticSound();
         }
     }
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         cam = Camera.main;
     }
 
@@ -54,7 +64,17 @@ public class CharacterInputHandler : MonoBehaviour
 
         _inputData.networkButtons.Set(MyButtons.Activate, _isActivatePressed);
         _isActivatePressed = false;
-        
+
         return _inputData;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RpcPlayMagneticSound()
+    {
+        if (_audioSource != null && magneticClip != null)
+        {
+            Debug.Log("plaaaay");
+            _audioSource.PlayOneShot(magneticClip);
+        }
     }
 }

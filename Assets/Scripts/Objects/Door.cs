@@ -17,11 +17,15 @@ public class Door : NetworkBehaviour, IActivable
     private SpriteRenderer myRend;
     [SerializeField] private string sceneName;
 
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _openDoorClip;
+
     public override void Spawned()
     {
         _mecanim = GetComponent<NetworkMecanimAnimator>();
         _networkRunner = FindObjectOfType<NetworkRunner>();
         myRend = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
     public void ChangeToActive()
     {
@@ -60,7 +64,10 @@ public class Door : NetworkBehaviour, IActivable
     private void RPC_OpenDoor(){
         var anim = GetComponent<Animator>().enabled = true;
         _mecanim.Animator.SetBool("Open", true);
-
+        if(_audioSource != null && _openDoorClip != null)
+        {
+            _audioSource.PlayOneShot(_openDoorClip);
+        }
         StartCoroutine(HandlePlayerDespawnAndSceneChange());
     }
     public void Activate()
