@@ -17,7 +17,7 @@ public class Door : NetworkBehaviour, IActivable
     private SpriteRenderer myRend;
     [SerializeField] private string sceneName;
 
-    AudioSource _audioSource;
+    [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _openDoorClip;
 
     public override void Spawned()
@@ -25,55 +25,77 @@ public class Door : NetworkBehaviour, IActivable
         _mecanim = GetComponent<NetworkMecanimAnimator>();
         _networkRunner = FindObjectOfType<NetworkRunner>();
         myRend = GetComponent<SpriteRenderer>();
-        _audioSource = GetComponent<AudioSource>();
     }
     public void ChangeToActive()
     {
         cantOfActives++;
-        if(cantOfActives >= cantToActive){
+        if (cantOfActives >= cantToActive)
+        {
             RPC_ChangeToEnable();
             GetComponent<BoxCollider2D>().enabled = true;
         }
     }
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player")){
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
             playerCount++;
-            if(playerCount >= 2)
+            if (playerCount >= 2)
                 RPC_ChangeToActive();
         }
     }
-    private void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player")){
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
             playerCount--;
-            if(playerCount < 2)
+            if (playerCount < 2)
                 RPC_ChangeToEnable();
         }
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_ChangeToEnable(){
-        if(myRend != null)
+    private void RPC_ChangeToEnable()
+    {
+        if (myRend != null)
             myRend.sprite = enabledDoor;
     }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_ChangeToActive(){
-        if(myRend != null)
+    private void RPC_ChangeToActive()
+    {
+        if (myRend != null)
             myRend.sprite = activeDoor;
     }
+
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_OpenDoor(){
+    private void RPC_OpenDoor()
+    {
+        Debug.Log("rpc llamado");
+
         var anim = GetComponent<Animator>().enabled = true;
         _mecanim.Animator.SetBool("Open", true);
-        if(_audioSource != null && _openDoorClip != null)
+        if (_audioSource != null && _openDoorClip != null)
         {
+            Debug.Log("ejecutando sonido");
+
             _audioSource.PlayOneShot(_openDoorClip);
         }
+        else
+            Debug.Log("algo fallo");
+
         StartCoroutine(HandlePlayerDespawnAndSceneChange());
     }
     public void Activate()
     {
-        if(playerCount >= 2){
+        if (playerCount >= 2)
+        {
+            Debug.Log("llamado activado trigger");
             RPC_OpenDoor();
+        }
+        else
+        {
+            Debug.Log("no hay 2 players");
         }
     }
     private IEnumerator HandlePlayerDespawnAndSceneChange()
@@ -106,7 +128,7 @@ public class Door : NetworkBehaviour, IActivable
     {
         //var runnerHandler = FindObjectOfType<NetworkRunnerHandler>();
         Runner.LoadScene(sceneName);
-        
+
     }
 }
 

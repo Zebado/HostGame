@@ -5176,7 +5176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActivatePressed: 0
-  magneticClip: {fileID: 8300000, guid: e56fa11732f4ddb4490bea4f84fe340a, type: 3}
+  _audioSource: {fileID: 3487657489144880869}
+  magneticClip: {fileID: 8300000, guid: 57b676a1f27131d428610c8aa09367ac, type: 3}
 --- !u!114 &285881151751369010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5614,7 +5615,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e56fa11732f4ddb4490bea4f84fe340a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 57b676a1f27131d428610c8aa09367ac, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

@@ -11,12 +11,11 @@ public class CharacterInputHandler : NetworkBehaviour
     private bool _isPositivePolarity;
     private Camera cam;
 
-    AudioSource _audioSource;
+    [SerializeField] AudioSource _audioSource;
     public AudioClip magneticClip;
     void Start()
     {
         _inputData = new NetworkInputData();
-        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -36,14 +35,14 @@ public class CharacterInputHandler : NetworkBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _isNegativePolarity = true;
-            if (Object.HasStateAuthority)
-                RpcPlayMagneticSound();
+
+            PlayMagneticSound();
         }
         if (Input.GetMouseButtonDown(1))
         {
             _isPositivePolarity = true;
-            if (Object.HasStateAuthority)
-                RpcPlayMagneticSound();
+
+            PlayMagneticSound();
         }
     }
     private void FixedUpdate()
@@ -67,13 +66,16 @@ public class CharacterInputHandler : NetworkBehaviour
 
         return _inputData;
     }
+    private void PlayMagneticSound()
+    {
+        RpcPlayMagneticSound();
+    }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     private void RpcPlayMagneticSound()
     {
         if (_audioSource != null && magneticClip != null)
         {
-            Debug.Log("plaaaay");
             _audioSource.PlayOneShot(magneticClip);
         }
     }

@@ -107,6 +107,7 @@ MonoBehaviour:
   enabledDoor: {fileID: -1180082013, guid: f086f0f9a0026ae4f972d789f58f8f49, type: 3}
   activeDoor: {fileID: 1478046943, guid: 2ae64402ac5bd9c429219df504800638, type: 3}
   sceneName: 
+  _audioSource: {fileID: 5430526754256831849}
   _openDoorClip: {fileID: 8300000, guid: 16dffad64f045554f9523c6f2edbed37, type: 3}
 --- !u!95 &3924433575700283334
 Animator:
