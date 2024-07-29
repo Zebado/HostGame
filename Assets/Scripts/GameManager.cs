@@ -43,20 +43,25 @@ public class GameManager : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_RestartLevel()
     {
-        StartCoroutine(LeaveRoomAndDisconnect());
+        StartCoroutine(Disconnect());
     }
-    private IEnumerator LeaveRoomAndDisconnect()
+    private IEnumerator Disconnect()
     {
         if(_runnerPrefab != null)
         {
             // Detener el NetworkRunner
-            _runnerPrefab.Shutdown();
-            Destroy(_runnerPrefab);
-            SceneManager.LoadScene("Main Menu");
+            Runner.Shutdown();
+            StartCoroutine(LeaveRoom());
+            //Destroy(_runnerPrefab);
 
             // Esperar un frame para asegurarse de que el shutdown se complete
             yield return null;
         }
+    }
+    private IEnumerator LeaveRoom()
+    {
+        SceneManager.LoadScene("Main Menu");
+        yield return null;
     }
 
     public void RestartLevel()

@@ -10,7 +10,8 @@ using UnityEngine.SceneManagement;
 public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] NetworkRunner _runnerPrefab;
-    
+    public static NetworkRunnerHandler Instance;
+
     private NetworkSceneManagerDefault _sceneManager;
 
     NetworkRunner _currentRunner;
@@ -21,7 +22,15 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        //DontDestroyOnLoad(gameObject);
     }
     private void Start() {
         _sceneManager = gameObject.GetComponent<NetworkSceneManagerDefault>();
@@ -89,13 +98,6 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     #endregion
 
-    private void OnDestroy()
-    {
-        if (_runnerPrefab != null)
-        {
-            _runnerPrefab.Shutdown();
-        }
-    }
 
     #region Lobby
     public void JoinLobby()
