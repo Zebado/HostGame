@@ -89,6 +89,14 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     #endregion
 
+    private void OnDestroy()
+    {
+        if (_runnerPrefab != null)
+        {
+            _runnerPrefab.Shutdown();
+        }
+    }
+
     #region Lobby
     public void JoinLobby()
     {

@@ -1,6 +1,8 @@
 using UnityEngine;
 using Fusion;
+using Fusion.Photon.Realtime;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 
 public class GameManager : NetworkBehaviour
@@ -41,9 +43,19 @@ public class GameManager : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_RestartLevel()
     {
-        if (Runner != null && Runner.IsSceneAuthority)
+        StartCoroutine(LeaveRoomAndDisconnect());
+    }
+    private IEnumerator LeaveRoomAndDisconnect()
+    {
+        if(_runnerPrefab != null)
         {
-            Runner.LoadScene(SceneManager.GetActiveScene().name);
+            // Detener el NetworkRunner
+            _runnerPrefab.Shutdown();
+            Destroy(_runnerPrefab);
+            SceneManager.LoadScene("Main Menu");
+
+            // Esperar un frame para asegurarse de que el shutdown se complete
+            yield return null;
         }
     }
 
