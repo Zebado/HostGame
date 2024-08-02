@@ -175,6 +175,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3406782255488917772, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
+      propertyPath: sceneName
+      value: Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406782255488917772, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
+      propertyPath: cantToActive
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3951915696923081381, guid: 1c363abfcbc84b04bb43c5a20fff48b4, type: 3}
       propertyPath: m_Name
       value: DoorLocked
@@ -2713,11 +2721,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.900001
+      value: -9.1175
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.98
+      value: 6.3
       objectReference: {fileID: 0}
     - target: {fileID: -4130715451908710511, guid: 9b3f8217e63653b4ea28d324d54071da, type: 3}
       propertyPath: m_LocalPosition.z
